@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Register</title>
+    <style>
+        .error {
+            color: red;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h2>User Registration</h2>
+
+    <!-- Hiển thị thông báo lỗi chung nếu có -->
+    <div th:if="${errorMessage}" class="error">
+        <p th:text="${errorMessage}"></p>
+    </div>
+
+    <!-- Form đăng ký người dùng -->
+    <form th:action="@{/register}" th:object="${user}" method="post">
+        <div class="form-group">
+            <label for="name">Tên:</label>
+            <input type="text" id="name" th:field="*{name}" required />
+            <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="dob">Ngày sinh:</label>
+            <input type="date" id="dob" th:field="*{dob}" required />
+            <div class="error" th:if="${#fields.hasErrors('dob')}" th:errors="*{dob}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="gender">Giới tính:</label>
+            <input type="text" id="gender" th:field="*{gender}" required />
+            <div class="error" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Số điện thoại:</label>
+            <input type="text" id="phone" th:field="*{phone}" required />
+            <div class="error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" th:field="*{email}" required />
+            <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="username">Tên đăng nhập:</label>
+            <input type="text" id="username" th:field="*{username}" required />
+            <div class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Mật khẩu:</label>
+            <input type="password" id="password" th:field="*{password}" required />
+            <div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="confirmPassword">Xác nhận mật khẩu:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required />
+            <div class="error" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="role">Vai trò:</label>
+            <select id="role" th:field="*{role}" required>
+                <option value="USER">Người dùng</option>
+                <option value="CHUSAN">Chủ sân</option>
+                <option value="ADMIN">Quản trị viên</option>
+            </select>
+            <div class="error" th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></div>
+        </div>
+
+        <button type="submit">Đăng ký</button>
+    </form>
+
+    <!-- JavaScript để kiểm tra mật khẩu xác nhận -->
+    <script>
+        document.querySelector('form').addEventListener('submit', function(event) {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            if (password !== confirmPassword) {
+                event.preventDefault();
+                alert('Mật khẩu xác nhận không khớp!');
+            }
+        });
+    </script>
+</body>
+</html>
