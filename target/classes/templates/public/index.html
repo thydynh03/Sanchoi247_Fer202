@@ -1,0 +1,51 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+</head>
+<body>
+    <h1> Index</h1>
+    <div th:if="${session.UserAfterLogin == null}"> <a th:href="@{/Login}">Login</a></div>
+    <div th:if="${session.UserAfterLogin != null}"> Hello <span th:text="${session.UserAfterLogin.name}"></span> <br>Role: <strong th:text="${session.UserAfterLogin.role}"></strong>
+        <!-- <br>
+        <a th:href="@{/ShowOrderByUserId}">View Order</a>
+        <br>
+        <a th:href="@{/ShowCart}">View Cart</a> -->
+        <br>
+        <a th:href="@{/Logout}">Logout</a>
+    </div>
+    
+    <!-- <div>
+        <form th:action="@{/SearchProduct}" method="post">
+            <input type="text" name="Search" placeholder="Search Product">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <table border="1px">
+        <tr>
+            <td>Id</td>
+            <td>Name</td>
+            <td>Type</td>
+            <td>Detail</td>
+            <td>img</td>
+            <td th:if="${session.UserAfterLogin != null and session.UserAfterLogin.role == 'S'}">Edit</td>
+        </tr>
+        <tr th:each="Product : ${ProductList}">
+            <td th:text="${Product.pid}"> ID</td>
+            <td th:text="${Product.pName}"> Name</td>
+            <td th:text="${Product.TypeProduct.tName}"> Type</td>
+            <td> <a th:href="@{/ViewDetail/{id}(id=${Product.pid})}" style="text-decoration: none; color: red;">View</a>
+            </td>
+            <td> <img th:src="${Product.img}" style="width: auto;" height="50px"></td>
+            <td th:if="${session.UserAfterLogin != null and session.UserAfterLogin.role == 'S'}"><a
+                    th:href="@{/ShowEditProduct/{id}(id=${Product.pid})}"
+                    style="text-decoration: none; color: red;">Edit</a></td>
+        </tr>
+    </table>
+    <div th:if="${session.UserAfterLogin != null and session.UserAfterLogin.role != 'U'}">
+        <a th:href="@{/ShowAddProduct}">ADD NEW PRODUCT</a>
+        </div> -->
+</body>
+</html>
