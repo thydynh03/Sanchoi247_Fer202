@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+</head>
+
+<body>
+    <h1>Index</h1>
+    <div th:if="${session.UserAfterLogin == null}">
+        <a th:href="@{/login}">Login</a>
+    </div>
+    <div th:if="${session.UserAfterLogin != null}">
+        Hello <span th:text="${session.UserAfterLogin.name}"></span> <br> Role: <strong th:text="${session.UserAfterLogin.role}"></strong><br>
+        <a th:href="@{/Logout}">Logout</a><br>
+        <a th:href="@{/ViewProfile}">View Profile</a>
+        <!-- Thêm nút View Profile -->
+    </div>
+    <div th:if="${session.UserAfterLogin == null}">
+        <a th:href="@{/signup}">Sign Up</a>
+    </div>
+</body>
+
+</html>

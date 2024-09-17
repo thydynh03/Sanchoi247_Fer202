@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Profile</title>
+</head>
+<body>
+    <h1>View Profile</h1>
+    <p><strong>Name:</strong> <span th:text="${user.name}"></span></p>
+    <p><strong>Date of Birth:</strong> <span th:text="${user.dob}"></span></p>
+    <p><strong>Gender:</strong> <span th:text="${user.gender}"></span></p>
+    <p><strong>Phone:</strong> <span th:text="${user.phone}"></span></p>
+    <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
+    <p><strong>Username:</strong> <span th:text="${user.username}"></span></p>
+    <p><strong>Role:</strong> <span th:text="${user.role}"></span></p>
+
+    <a href="/EditProfile">Edit Profile</a>
+    <a href="/">Back to Home</a>
+</body>
+</html>

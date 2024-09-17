@@ -1,0 +1,15 @@
+<form action="/UpdateProfile" method="post">
+    <input type="text" name="name" value="${user.name}" required />
+    <input type="number" name="age" value="${user.age}" required />
+    <input type="text" name="phone" value="${user.phone}" required />
+    <input type="email" name="email" value="${user.email}" required />
+    <input type="text" name="cccd" value="${user.cccd}" required />
+    <input type="text" name="address" value="${user.address}" required />
+    <input type="text" name="username" value="${user.username}" required />
+    <input type="password" name="password" value="${user.password}" required />
+    <input type="date" name="birthday" value="${user.birthday}" required />
+    <button type="submit">Update Profile</button>
+</form>
+
+<!-- Nút riêng để đổi mật khẩu -->
+<a href="/ChangePassword" class="btn btn-secondary">Change Password</a>

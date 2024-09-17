@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+</head>
+<body>
+    <h1>Signup</h1>
+    <form action="/signupuser" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="dob">Dob:</label>
+        <input type="date" id="dob" name="dob" required><br>
+
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender" required>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select><br>
+
+        <label for="phone">Phone:</label>
+        <input type="tel" id="phone" name="phone" required><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br>
+
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br>
+
+        <label for="cpassword">Confirm Password:</label>
+        <input type="password" id="cpassword" name="cpassword" required><br>
+
+        <label for="role">Role:</label>
+        <select id="role" name="role" required>
+            <option value="User">User</option>
+            <option value="Field Owner">Field Owner</option>
+        </select><br>
+
+        <button type="submit">Register</button>
+    </form>
+
+    <div th:if="${error != null}" style="color: red;">
+        <p th:text="${error}"></p>
+    </div>
+    <p><a href="/login">Back to Login</a></p>
+</body>
+</html>
