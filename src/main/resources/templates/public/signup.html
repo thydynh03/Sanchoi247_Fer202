@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signup</title>
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="/css/style.css"> <!-- Liên kết đến file CSS -->
 </head>
 <body>
-    <h1>Signup</h1>
+    <h1>Sign Up</h1>
     <form action="/signupuser" method="post">
-        <label for="name">Name:</label>
+        <label for="name">Full Name:</label>
         <input type="text" id="name" name="name" required><br>
 
-        <label for="dob">Dob:</label>
+        <label for="dob">Date Of Birth:</label>
         <input type="date" id="dob" name="dob" required><br>
 
         <label for="gender">Gender:</label>
@@ -20,8 +21,8 @@
             <option value="Female">Female</option>
         </select><br>
 
-        <label for="phone">Phone:</label>
-        <input type="tel" id="phone" name="phone" required><br>
+        <label for="phone">Phone Number:</label>
+        <input type="text" id="phone" name="phone" required><br>
 
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required><br>
@@ -30,7 +31,12 @@
         <input type="text" id="username" name="username" required><br>
 
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
+        <input type="password" id="password" name="password" required oninput="checkPasswordStrength()"><br>
+
+        <!-- Thông báo trạng thái mật khẩu và thanh trạng thái -->
+        <div id="password-strength"></div>
+        <div id="strength-bar"></div>
+        <div id="password-message" class="password-message"></div>
 
         <label for="cpassword">Confirm Password:</label>
         <input type="password" id="cpassword" name="cpassword" required><br>
@@ -41,12 +47,65 @@
             <option value="Field Owner">Field Owner</option>
         </select><br>
 
-        <button type="submit">Register</button>
+        <!-- Thông báo lỗi -->
+        <div th:if="${error}" style="color: red;">
+            <p th:text="${error}"></p>
+        </div>
+
+        <button type="submit">Sign Up</button>
     </form>
 
-    <div th:if="${error != null}" style="color: red;">
-        <p th:text="${error}"></p>
-    </div>
-    <p><a href="/login">Back to Login</a></p>
+    <p>Already have an account? <a href="/login">Log in</a></p>
+
+    <script>
+        function checkPasswordStrength() {
+            var password = document.getElementById("password").value;
+            var strengthText = document.getElementById("password-strength");
+            var strengthBar = document.getElementById("strength-bar");
+            var passwordMessage = document.getElementById("password-message");
+
+            var strength = 0;
+            if (password.length >= 8) strength++;
+            if (/[a-z]/.test(password)) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[\W_]/.test(password)) strength++;
+
+            // Đặt lại thanh và thông điệp
+            strengthBar.className = '';
+            strengthBar.style.width = '0%';
+            passwordMessage.innerHTML = '';
+
+            switch (strength) {
+                case 0:
+                case 1:
+                case 2:
+                    strengthText.innerHTML = "<span style='color:red;'>Weak</span>";
+                    strengthBar.className = 'strength-weak';
+                    strengthBar.style.width = '33%';
+                    passwordMessage.innerHTML = "Password must be at least 8 characters long, include uppercase, lowercase letters, numbers, and special characters.";
+                    strengthBar.style.backgroundColor = 'red'; // Đặt màu nền
+
+                    break;
+                case 3:
+                    strengthText.innerHTML = "<span style='color:orange;'>Moderate</span>";
+                    strengthBar.className = 'strength-moderate';
+                    strengthBar.style.width = '66%';
+                    passwordMessage.innerHTML = "Good password, but could be stronger.";
+                    strengthBar.style.backgroundColor = 'orange'; // Đặt màu nền
+
+                    break;
+                case 4:
+                case 5:
+                    strengthText.innerHTML = "<span style='color:green;'>Strong</span>";
+                    strengthBar.className = 'strength-strong';
+                    strengthBar.style.width = '100%';
+                    passwordMessage.innerHTML = "Great password!";
+                    strengthBar.style.backgroundColor = 'green'; // Đặt màu nền
+
+                    break;
+            }
+        }
+    </script>
 </body>
 </html>
