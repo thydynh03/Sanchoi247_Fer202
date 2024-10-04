@@ -1,0 +1,769 @@
+<!-- <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+</head> -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <link rel="icon" type="image/png"
+        href="https://res.cloudinary.com/djcowpoua/image/upload/v1716277138/5E9B944E-8D69-4D6B-AF10-93526CF88EAA_invhvi.png">
+    <style>
+        /* Dark Mode Styles */
+        body {
+            color: white;
+            background-image: url('https://e1.pxfuel.com/desktop-wallpaper/258/300/desktop-wallpaper-5-vaporwave-and-backgrounds-1920x1080-retro-vaporwave.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        .navbar-custom {
+            background-color: #191825;
+        }
+
+        .navbar-custom .navbar-brand,
+        .navbar-custom .nav-link,
+        .navbar-custom .dropdown-item {
+            color: white;
+        }
+
+        .navbar-custom .navbar-brand:hover,
+        .navbar-custom .nav-link:hover,
+        .navbar-custom .dropdown-item:hover {
+            color: #E384FF;
+        }
+
+        .form-control {
+            background-color: white;
+            border-color: #191825;
+            color: black;
+        }
+
+        .form-control::placeholder {
+            color: #6c757d;
+        }
+
+        .btn-outline-secondary {
+            color: white;
+            border-color: #6466E9;
+        }
+
+        .btn-outline-secondary:hover {
+            background-color: #6466E9;
+            color: white;
+            border-color: #6466E9;
+        }
+
+        .btn-secondary {
+            color: white;
+            background-color: #6466E9;
+            border-color: #6466E9;
+        }
+
+        .btn-secondary:hover {
+            background-color: #4e50b8;
+            border-color: #4e50b8;
+        }
+
+        .btn-primary {
+            background-color: #6466E9;
+            border-color: #6466E9;
+        }
+
+        .btn-primary:hover {
+            background-color: #4e50b8;
+            border-color: #4e50b8;
+        }
+
+        .dropdown-menu {
+            background-color: #6466E9;
+        }
+
+        .dropdown-menu .dropdown-item {
+            color: white;
+        }
+
+        .dropdown-menu .dropdown-item:hover {
+            background-color: #E384FF;
+            color: white;
+        }
+
+        .text-end {
+            text-align: end;
+        }
+
+        .avatar-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            position: relative;
+            box-shadow: 0 0 20px rgba(100, 102, 233, 0.5);
+        }
+
+        .loading-spinner {
+            display: none;
+            /* Initially hidden */
+            border-radius: 50%;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Semi-transparent overlay */
+        }
+
+        .loading-spinner::after {
+            content: '';
+            width: 40px;
+            height: 40px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .avatar::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            width: calc(100% + 10px);
+            height: calc(100% + 10px);
+            border-radius: 50%;
+            background: conic-gradient(from 0deg,
+                    rgba(227, 132, 255, 0.8) 0%,
+                    rgba(227, 132, 255, 0) 40%,
+                    rgba(100, 102, 233, 0.8) 60%,
+                    rgba(100, 102, 233, 0) 100%);
+            animation: runningLight 3s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes runningLight {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .avatar,
+        .img-fluid {
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(100, 102, 233, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .avatar:hover,
+        .img-fluid:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(100, 102, 233, 0.8);
+        }
+
+        .avatar-small {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 8px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            box-shadow: 0 0 0 0.2rem rgba(100, 102, 233, 0.25);
+            border-color: #6466E9;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translate3d(0, 40px, 0);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        .form,
+        .avatar {
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, .5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 1;
+            }
+
+            20% {
+                transform: scale(25, 25);
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(40, 40);
+            }
+        }
+
+        .btn:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+
+        .input-group-text {
+            background-color: #6466E9;
+            color: white;
+        }
+
+        input::placeholder {
+            color: #d1d1d1;
+            font-style: italic;
+        }
+
+        .container {
+            margin-top: 2rem;
+        }
+
+        h2 {
+            margin-bottom: 2rem;
+            color: #E384FF;
+        }
+
+        .form-label {
+            color: #ffffff;
+            /* Màu tím đậm */
+            font-weight: 500;
+            /* Độ đậm vừa phải */
+            font-size: 0.9em;
+            /* Kích thước chữ nhỏ hơn một chút */
+            text-transform: uppercase;
+            /* Chữ in hoa */
+            letter-spacing: 0.05em;
+            /* Tăng khoảng cách giữa các chữ cái */
+            margin-bottom: 0.5em;
+            /* Thêm khoảng cách dưới label */
+            display: inline-block;
+            /* Cho phép margin-bottom hoạt động */
+            position: relative;
+            /* Để thêm pseudo-element */
+            transition: all 0.3s ease;
+            /* Hiệu ứng chuyển đổi mượt mà */
+        }
+
+        .form-label::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 0;
+            height: 2px;
+            background-color: #ffffff;
+            transition: width 0.3s ease;
+        }
+
+        .form-label:hover::after {
+            width: 100%;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group .form-control {
+            border-left: none;
+        }
+
+        .input-group .input-group-text {
+            border-right: none;
+            border-color: #6466E9;
+        }
+
+        .form-control:focus+.input-group-text,
+        .input-group-text:focus+.form-control {
+            border-color: #6466E9;
+            box-shadow: none;
+        }
+
+        .form-control::placeholder {
+            color: #a0a0a0;
+            font-style: italic;
+        }
+
+
+
+        button {
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        button[type="reset"] {
+            background-color: #E384FF;
+            border-color: #E384FF;
+        }
+
+        button[type="reset"]:hover {
+            background-color: #d06fd6;
+            border-color: #d06fd6;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes bounceIn {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-30px);
+            }
+
+            60% {
+                transform: translateY(-15px);
+            }
+        }
+
+        .form {
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .avatar {
+            animation: slideIn 0.5s ease-out;
+        }
+
+        /* Additional Styles for Buttons */
+        .btn-secondary,
+        .btn-primary,
+        .btn-outline-secondary {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-secondary:after,
+        .btn-primary:after,
+        .btn-outline-secondary:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, .5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        .btn-secondary:focus:not(:active)::after,
+        .btn-primary:focus:not(:active)::after,
+        .btn-outline-secondary:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 1;
+            }
+
+            20% {
+                transform: scale(25, 25);
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(40, 40);
+            }
+        }
+
+
+        .input-group-text {
+            background-color: #6466E9;
+            color: white;
+            border: none;
+        }
+
+        .input-group-text:hover {
+            background-color: #4e50b8;
+            color: white;
+        }
+
+        .input-group .form-control {
+            border-color: #6466E9;
+        }
+
+        .form-control:focus {
+            border-color: #6466E9;
+            box-shadow: 0 0 5px rgba(100, 102, 233, 0.5);
+        }
+
+        .btn:focus {
+            outline: none;
+            box-shadow: 0 0 0 0.2rem rgba(100, 102, 233, 0.25);
+        }
+
+        .btn-primary:focus {
+            box-shadow: 0 0 0 0.2rem rgba(100, 102, 233, 0.5);
+        }
+
+        .btn-secondary:focus {
+            box-shadow: 0 0 0 0.2rem rgba(227, 132, 255, 0.5);
+        }
+
+        .btn-outline-secondary:focus {
+            box-shadow: 0 0 0 0.2rem rgba(100, 102, 233, 0.5);
+        }
+
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .dropdown-item {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background-color: #4e50b8;
+            color: white;
+        }
+
+        .text-end {
+            margin-top: 1.5rem;
+        }
+
+        h2 {
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translate3d(0, 40px, 0);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        .title-h2 {
+            text-shadow: 0px 0px 10px #E384FF, 0px 0px 20px #E384FF, 0px 0px 40px #E384FF;
+        }
+
+
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .form-change {
+  background-color: rgba(0, 0, 0, 0.5); /* Màu đen (#000000) với độ trong suốt 50% */
+  padding: 20px;
+  border-radius: 20px;
+}
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row form-change">
+            <!-- Profile Editing Section -->
+            <div class="col-md-6 ">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <a href="/" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to Home
+                    </a>
+                </div>
+                <form class="form" th:action="@{/EditProfile}" method="post">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name:</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            <input name="name" class="form-control" id="name" type="text" pattern="[\s\S]+" required
+                                title="Tên chỉ nên chứa các chữ cái và khoảng trắng. Ví dụ: Nguyễn Văn Á. Lưu ý: không sử dụng ký tự đặc biệt hoặc số."
+                                placeholder="Nhập tên của bạn ở đây..." th:value="${session.UserAfterLogin.name}">
+                        </div>
+                    </div>
+            
+                    <div class="mb-3"></div>
+                        <label for="dob" class="form-label">Date of Birth:</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                            <input name="dob" class="form-control" type="date" id="dob"
+                                th:value="${session.UserAfterLogin.dob}" required placeholder="YYYY-MM-DD">
+                        </div>
+                    </div>
+            
+                    <div class="mb-3"></div>
+                        <label for="gender" class="form-label">Gender:</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-venus-mars"></i></span>
+                            <!-- <select class="form-control" name="gender" required>
+                                <option th:value="${session.UserAfterLogin.gender}" disabled>Select Gender</option> 
+                                <option value="M" th:selected="${session.UserAfterLogin.gender == 'M'}">Male</option>
+                                <option value="F" th:selected="${session.UserAfterLogin.gender == 'F'}">Female</option>
+                                <option value="O" th:selected="${session.UserAfterLogin.gender == 'O'}">Other</option>
+                            </select> -->
+            
+                            <select class="form-control" name="gender" required>
+                                <option th:value="${session.UserAfterLogin.gender}" th:text="${session.UserAfterLogin.gender}">Select Gender</option> 
+                                <option th:value="M">Male</option>
+                                <option th:value="F">Female</option>
+                                <option th:value="O">Other</option>
+                            </select>
+                        </div>
+                    </div>
+            
+                    <div class="mb-3"></div>
+                        <label for="phone" class="form-label">Phone Number:</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                            <input name="phone" class="form-control" type="text" maxlength="10"
+                                oninput="this.value=this.value.replace(/[^0-9]/g,'');" required
+                                placeholder="Type your Mobile Number..." th:value="${session.UserAfterLogin.phone}">
+                        </div>
+                    </div>
+            
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email address:</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                            <input name="email" class="form-control" type="email" required
+                                placeholder="Type your email address..."
+                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                                th:value="${session.UserAfterLogin.email}">
+                        </div>
+                    </div>
+                    
+                    
+                    
+                    <!-- them thuoc tinh Owner -->
+                    <div th:if="${session.UserAfterLogin.role.toString() == 'C'}">
+                        <div class="mb-3">
+                            <label for="ten_san" class="form-label">Stadium name:</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-user-tie"></i></span>
+                                <input name="ten_san" class="form-control" id="ten_san" type="text" required
+                                    placeholder="Enter the stadium name"
+                                    th:value="${session.UserAfterLogin.ten_san}">
+                            </div>
+                        </div>
+            
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Address:</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                                <input name="address" class="form-control" id="address" type="text"
+                                    placeholder="Enter the address" th:value="${session.UserAfterLogin.address}">
+                            </div>
+                        </div>
+            
+                        <!-- Trường Hình ảnh sân 1 -->
+                        <div class="mb-3">
+                            <label for="img_san1" class="form-label">Hình ảnh sân 1:</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-image"></i></span>
+                                <input name="img_san1" class="form-control" id="img_san1" type="text"
+                                    placeholder="URL hình ảnh sân 1"
+                                    th:value="${session.UserAfterLogin.img_san1}">
+                            </div>
+                        </div>
+            
+                        <!-- Trường Hình ảnh sân 2 -->
+                        <div class="mb-3">
+                            <label for="img_san2" class="form-label">Hình ảnh sân 2:</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-image"></i></span>
+                                <input name="img_san2" class="form-control" id="img_san2" type="text"
+                                    placeholder="URL hình ảnh sân 2"
+                                    th:value="${session.UserAfterLogin.img_san2}">
+                            </div>
+                        </div>
+            
+                        <!-- Trường Hình ảnh sân 3 -->
+                        <div class="mb-3">
+                            <label for="img_san3" class="form-label">Hình ảnh sân 3:</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-image"></i></span>
+                                <input name="img_san3" class="form-control" id="img_san3" type="text"
+                                    placeholder="URL hình ảnh sân 3"
+                                    th:value="${session.UserAfterLogin.img_san3}">
+                            </div>
+                        </div>
+            
+                        <!-- Trường Hình ảnh sân 4 -->
+                        <div class="mb-3">
+                            <label for="img_san4" class="form-label">Hình ảnh sân 4:</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-image"></i></span>
+                                <input name="img_san4" class="form-control" id="img_san4" type="text"
+                                    placeholder="URL hình ảnh sân 4"
+                                    th:value="${session.UserAfterLogin.img_san4}">
+                            </div>
+                        </div>
+            
+                <!-- Trường Hình ảnh sân 5 -->
+                        <div class="mb-3">
+                            <label for="img_san5" class="form-label">Hình ảnh sân 5:</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-image"></i></span>
+                                <input name="img_san5" class="form-control" id="img_san5" type="text"
+                                    placeholder="URL hình ảnh sân 5"
+                                    th:value="${session.UserAfterLogin.img_san5}">
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="text-end">
+                        <button class="btn btn-secondary" type="reset"> Reset</button>
+                        <button class="btn btn-primary" type="submit">Edit<i
+                                class="fa fa-fw fa-paper-plane"></i></button>
+                    </div>
+                    <div th:if="${message}" class="alert alert-success" role="alert">
+                        <span th:text="${message}"></span>
+                    </div>
+                    <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+                        <span th:text="${errorMessage}"></span>
+                    </div>
+                    <a th:href="@{/ShowChangePassword}">Change Password</a>
+                    <a th:href="@{/}">Back to home</a>
+                </form>
+            </div>
+            
+            <!-- Avatar and Upload Section -->
+            <div class="col-md-6 text-center">
+                <h2 class="title-h2">Upload Avatar</h2>
+                <form action="#" th:action="@{/upload}" method="post" enctype="multipart/form-data"
+                    class="form" id="uploadForm">
+                    <div class="mb-3 avatar-container">
+                        <img class="avatar img-fluid" th:src="@{${user.avatar}}" alt="Avatar">
+                        <div class="loading-spinner"></div>
+                    </div>
+                    <div class="mb-3 text-center">
+                        <input type="file" class="form-control" name="image" id="imageInput"
+                            accept="image/gif, image/jpeg, image/png" placeholder="Upload file" onchange="checkFile()">
+                    </div>
+                    <div class="text-center d-flex justify-content-center align-items-center">
+                        <button type="submit" id="submitButton" class="btn btn-primary"
+                            style="display: none;">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+            <script>
+                function checkFile() {
+                    var fileInput = document.getElementById('imageInput');
+                    var submitButton = document.getElementById('submitButton');
+                    var loadingSpinner = document.querySelector('.loading-spinner');
+
+                    if (fileInput.files.length > 0) {
+                        submitButton.style.display = 'block';
+
+                    } else {
+                        submitButton.style.display = 'none';
+                    }
+                }
+
+                document.getElementById('uploadForm').addEventListener('submit', function (e) {
+                    e.preventDefault(); // Prevent default form submission behavior
+                    var loadingSpinner = document.querySelector('.loading-spinner');
+                    loadingSpinner.style.display = 'flex'; // Show the loading spinner
+
+                    // Submit the form (actual upload happens on server-side)
+                    e.target.submit();
+                });
+
+            </script>
+
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
