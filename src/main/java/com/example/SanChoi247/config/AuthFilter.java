@@ -1,5 +1,5 @@
-package com.example.SanChoi247.config;
+// package com.example.SanChoi247.config;
 
-public class AuthFilter {
+// public class AuthFilter {
 
-}
+// }

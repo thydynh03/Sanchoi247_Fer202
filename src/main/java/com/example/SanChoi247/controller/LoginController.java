@@ -41,7 +41,7 @@ public class LoginController {
             }
         }
         model.addAttribute("userList", Owner);
-        return "public/index" + httpServletRequest.getSession().getId();
+        return "public/index";// + httpServletRequest.getSession().getId()
     }
 
     @GetMapping("/Login")

@@ -157,13 +157,18 @@ public class UserController {
             Model model) {
         try {
             User user = (User) session.getAttribute("UserAfterLogin");
-            if (user.getPassword().equals(oldPassword) && !newPassword.equals(oldPassword)
-                    && newPassword.equals(confirmPassword)) {
+
+            // Kiểm tra xem mật khẩu cũ có đúng không
+            if (!user.getPassword().equals(oldPassword)) {
+                model.addAttribute("error", "Old password is incorrect.");
+            } else if (newPassword.equals(oldPassword)) {
+                model.addAttribute("error", "New password cannot be the same as the old password.");
+            } else if (!newPassword.equals(confirmPassword)) {
+                model.addAttribute("error", "New password and confirm password do not match.");
+            } else {
                 userRepo.updatePassword(user.getUid(), newPassword);
                 model.addAttribute("message", "Password updated successfully!");
-                return "redirect:/Logout";
-            } else {
-                model.addAttribute("error", "Invalid value");
+                return "redirect:/Logout"; // Chuyển hướng sau khi thay đổi thành công
             }
         } catch (Exception e) {
             model.addAttribute("error", "Error updating password.");

@@ -1,27 +1,41 @@
 // package com.example.SanChoi247.model.service;
 
+// import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.http.HttpStatus;
 // import org.springframework.web.server.ResponseStatusException;
+// import org.springframework.security.crypto.password.PasswordEncoder;
+// import org.springframework.beans.factory.annotation.Value;
 
+// import com.example.SanChoi247.config.JwtUtil;
+// import com.example.SanChoi247.model.dto.UserSecretInfo;
 // import com.example.SanChoi247.model.entity.User;
 // import com.example.SanChoi247.model.repo.UserRepo;
+// import com.example.SanChoi247.model.repo.UserSecretsRepo;
 
 // public class PasswordResetService {
-//     private final PasswordEncoder passwordEncoder;
-//     private final UserRepo userRepository;
-//     private final UserSecretsRepo userSecretsRepo;
-//     private final OTPService otpService;
-//     private final EmailService emailService;
-//     private final int OTP_TIME_WINDOW_MINUTES;
-//     private final JwtUtil jwtUtil;
-//     private final UserDetailsServiceImpl userDetailsServiceImpl;
+//     @Autowired
+//     PasswordEncoder passwordEncoder;
+//     @Autowired
+//     UserRepo userRepo;
+//     @Autowired
+//     UserSecretsRepo userSecretsRepo;
+//     @Autowired
+//     OTPService otpService;
+//     @Autowired
+//     EmailService emailService;
+//     @Autowired
+//     int OTP_TIME_WINDOW_MINUTES;
+//     @Autowired
+//     JwtUtil jwtUtil;
+//     @Autowired
+//     UserDetailsServiceImpl userDetailsServiceImpl;
 
-//     public PasswordResetService(PasswordEncoder passwordEncoder, UserRepo userRepository,
+//     public PasswordResetService(PasswordEncoder passwordEncoder, UserRepo userRepo,
 //             UserSecretsRepo userSecretsRepo, OTPService otpService, EmailService emailService,
 //             @Value("${OTP_TIME_WINDOW_MINUTES}") int OTP_TIME_WINDOW_MINUTES, JwtUtil jwtUtil,
 //             UserDetailsServiceImpl userDetailsServiceImpl) {
 //         this.passwordEncoder = passwordEncoder;
-//         this.userRepository = userRepository;
+//         this.userRepo = userRepo;
 //         this.userSecretsRepo = userSecretsRepo;
 //         this.otpService = otpService;
 //         this.emailService = emailService;
@@ -32,13 +46,13 @@
 
 //     public String handleFormSubmission(String email) throws Exception {
 //         // Check if the user already exists in the database
-//         User user = userRepository.getUserByEmail(email);
-//         user = user == null ? userRepository.getUserByUsername(email) : user;
+//         User user = userRepo.getUserByEmail(email);
+//         user = user == null ? userRepo.getUserByUsername(email) : user;
 //         if (user == null) {
 //             // If the user doesn't exist, create a new user
 //             user = new User();
 //             user.setEmail(email);
-//             userRepository.save(user);
+//             userRepo.save(user);
 //         }
 
 //         email = user.getEmail();
@@ -46,16 +60,16 @@
 //                 "$1****$2.");
 
 //         // Generate a secret key for the user
-//         UserSecretInfo secretKey = userSecretsRepo.findByUserId(user.getUserId());
+//         UserSecretInfo secretKey = userSecretsRepo.findByUserId(user.getUid());
 //         if (secretKey != null) {
 //             if (secretKey.getCreatedAt() != null && secretKey.getCreatedAt().plusMinutes(OTP_TIME_WINDOW_MINUTES)
 //                     .isAfter(java.time.LocalDateTime.now())) {
 //                 return "OTP already sent to " + censored_email + ". Please check your inbox.";
 //             }
-//             userSecretsRepo.deleteSecretKey(user.getUserId());
+//             userSecretsRepo.deleteSecretKey(user.getUid());
 //         }
 //         String secretString = SecretGenerator.generateSecret();
-//         userSecretsRepo.insertSecretKey(user.getUserId(), secretString);
+//         userSecretsRepo.insertSecretKey(user.getUid(), secretString);
 
 //         // Generate an OTP for the user
 //         String otp = otpService.generateOTP(secretString);
@@ -68,14 +82,14 @@
 
 //     public String verifyOTP(String email, String otp) throws Exception {
 //         // Check if the user already exists in the database
-//         User user = userRepository.findByEmail(email);
-//         user = user == null ? userRepository.findByUsername(email) : user;
+//         User user = userRepo.getUserByEmail(email);
+//         user = user == null ? userRepo.getUserByUsername(email) : user;
 //         if (user == null) {
 //             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found");
 //         }
 
 //         // Check if the user has a secret key
-//         String secretKey = userSecretsRepo.getSecretKey(user.getUserId());
+//         String secretKey = userSecretsRepo.getSecretKey(user.getUid());
 //         if (secretKey == null) {
 //             ;
 //             throw new RuntimeException("Secret key not found");
@@ -85,7 +99,7 @@
 //         if (!otpService.validateOTP(secretKey, otp)) {
 //             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid OTP");
 //         }
-//         userSecretsRepo.deleteSecretKey(user.getUserId());
+//         userSecretsRepo.deleteSecretKey(user.getUid());
 
 //         // Generate a reset token for the user and return it
 //         return jwtUtil.generateToken(userDetailsServiceImpl.loadUserByUsername(user.getUsername()));
@@ -99,18 +113,18 @@
 //         }
 
 //         // Find the user
-//         User user = userRepository.findByUsername(userName);
+//         User user = userRepo.getUserByUsername(userName);
 //         if (user == null) {
 //             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found from token.");
 //         }
 
 //         // Check password strength
-//         if (!userRepository.isValidPassword(newPassword)) {
+//         if (!userRepo.isValidPassword(newPassword)) {
 //             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password not strong enough lah.");
 //         }
 
 //         // Update the user's password
 //         user.setPassword(passwordEncoder.encode(newPassword));
-//         userRepository.save(user);
+//         userRepo.save(user);
 //     }
 // }

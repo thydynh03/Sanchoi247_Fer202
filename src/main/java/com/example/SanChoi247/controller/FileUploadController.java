@@ -23,10 +23,10 @@ public class FileUploadController {
     @Autowired
     UserRepo userRepo;
 
-    @RequestMapping("/")
-    public String home() {
-        return "home";
-    }
+    // @RequestMapping("/")
+    // public String home() {
+    // return "home";
+    // }
 
     @PostMapping("/upload")
     public String uploadFile(@RequestParam("image") MultipartFile multipartFile, Model model, HttpSession httpSession)
