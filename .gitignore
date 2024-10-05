@@ -1,0 +1,44 @@
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+src/main/resources/security.properties
+src/main/resources/application.properties
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+# Bỏ qua các file nhạy cảm
+src/main/resources/security.properties
+src/main/resources/application.properties
+
+# Bỏ qua thư mục build
+/build/
+
+# Bỏ qua các file log
+*.log
+
+# Bỏ qua các file tạm
+*.tmp
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
