@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.SanChoi247.model.entity.San;
+import com.example.SanChoi247.model.entity.ScheduleBooking;
 import com.example.SanChoi247.model.repo.SanRepo;
+import com.example.SanChoi247.model.repo.ScheduleBookingRepo;
 
 @Controller
 public class SanController {
