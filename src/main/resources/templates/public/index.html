@@ -1,0 +1,110 @@
+<html lang="en"></html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+    <!-- <link rel="stylesheet" href="/css/index.css"> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+    <h1> Index</h1>
+    <div th:if="${session.UserAfterLogin == null}"> <a th:href="@{/Login}">Login</a></div>
+    <div th:if="${session.UserAfterLogin != null}"> Hello <span th:text="${session.UserAfterLogin.name}"></span> <br>Role: <strong th:text="${session.UserAfterLogin.role}"></strong>
+        <br>
+        <a th:href="@{/ShowEditProfile}">View Profile</a>
+        <br>
+        <a th:href="@{/Logout}">Logout</a>
+    </div>
+    
+    <div>
+        <form th:action="@{/Search}" method="post">
+            <input type="text" name="Search" placeholder="Search">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <!-- <table border="1px">
+        <tr>
+            <td>Name</td>
+            <td>Address</td>
+            <td>View Detail</td>   
+            <td>Img</td>
+        </tr>
+        <tr th:each="San : ${userList}">
+            <td th:text="${San.ten_san}">Name</td>
+            <td th:text="${San.address}">Address</td>
+            <td><a th:href="@{/ViewDetail/{id}(id=${San.uid})}">View</a></td>
+            <td><img th:src="${San.img_san}" style="width: auto;" height="50px"></td>
+        </tr>
+    </table> -->
+
+    <!-- //------------------------------------------------------------------------------------// -->
+
+
+
+    
+    <!-- //-----------------------------------------------------------------------------------------------// -->
+
+    <div th:each="San : ${userList}">
+        <div class="card" style="width: 18rem;">
+            <div>
+                <!-- Sử dụng th:id để Thymeleaf nhận giá trị động của San.uid -->
+                <div th:id="'carouselExample' + ${San.uid}" class="carousel slide card-img-top" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        <button type="button" th:attr="data-bs-target='#carouselExample' + ${San.uid}" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" th:attr="data-bs-target='#carouselExample' + ${San.uid}" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" th:attr="data-bs-target='#carouselExample' + ${San.uid}" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        <button type="button" th:attr="data-bs-target='#carouselExample' + ${San.uid}" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                        <button type="button" th:attr="data-bs-target='#carouselExample' + ${San.uid}" data-bs-slide-to="4" aria-label="Slide 5"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img th:src="${San.img_san1}" style="height: 200px;" class="d-block w-100" alt="..."/>
+                            <div class="carousel-caption d-none d-md-block"></div>
+                        </div>
+                        <div class="carousel-item">
+                            <img th:src="${San.img_san2}" style="height: 200px;" class="d-block w-100" alt="..."/>
+                            <div class="carousel-caption d-none d-md-block"></div>
+                        </div>
+                        <div class="carousel-item">
+                            <img th:src="${San.img_san3}" style="height: 200px;" class="d-block w-100" alt="..."/>
+                            <div class="carousel-caption d-none d-md-block"></div>
+                        </div>
+                        <div class="carousel-item">
+                            <img th:src="${San.img_san4}" style="height: 200px;" class="d-block w-100" alt="..."/>
+                            <div class="carousel-caption d-none d-md-block"></div>
+                        </div>
+                        <div class="carousel-item">
+                            <img th:src="${San.img_san5}" style="height: 200px;" class="d-block w-100" alt="..."/>
+                            <div class="carousel-caption d-none d-md-block"></div>
+                    </div>
+                    <!-- <button class="carousel-control-prev" type="button" 
+                        th:attr="data-bs-target='#carouselExample' + ${San.uid}" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" 
+                        th:attr="data-bs-target='#carouselExample' + ${San.uid}" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button> -->
+                </div>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title" th:text="${San.ten_san}">Card title</h5>
+                <p class="card-text">
+                    <i class="fas fa-map-marker-alt location-icon"></i>
+                    <span th:text="${San.address}">Address here</span>
+                </p>
+                <!-- <p class="card-text" th:text="${San.address}">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+                <a th:href="@{/ViewDetail/{id}(id=${San.uid})}" class="btn btn-primary">View</a>
+            </div>
+        </div>
+    </div>
+    
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</html>
