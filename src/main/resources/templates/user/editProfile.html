@@ -307,11 +307,123 @@
                         </div>
                     </div>
 
+                    <div th:if="${session.UserAfterLogin.role.toString() == 'C'}">
+                        <div class="mb-3">
+                            <label for="ten_san" class="form-label">Stadium name:</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-user-tie"></i></span>
+                                <input name="ten_san" class="form-control" id="ten_san" type="text" required
+                                    placeholder="Enter the stadium name"
+                                    th:value="${session.UserAfterLogin.ten_san}">
+                            </div>
+                        </div>
+            
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Address:</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                                <input name="address" class="form-control" id="address" type="text"
+                                    placeholder="Enter the address" th:value="${session.UserAfterLogin.address}">
+                            </div>
+                        </div>
+
+                        <div>
+                            <div>
+                                <label for="img_san1" class="form-label">Image Stadium 1:</label>
+                                <form action="#" th:action="@{/upload}" method="post" enctype="multipart/form-data" class="form" id="uploadForm">
+                                    <div class="mb-3 img-stadium-container">
+                                        <img style="height: auto; width: 100%; max-height: 200px; border: 2px solid rgba(75, 112, 78, 0.5); border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" class="img-stadium img-fluid" th:src="@{${user.img_san1}}" alt="Img_san1">
+                                        <div class="loading-spinner"></div>
+                                    </div>
+                                    <div class="mb-3 text-center">
+                                        <input type="file" class="form-control" name="image" id="imageInput"
+                                            accept="image/gif, image/jpeg, image/png" placeholder="Upload file" onchange="checkFile()">
+                                    </div>
+                                    <div class="text-center d-flex justify-content-center align-items-center">
+                                        <button type="submit" id="submitButton" class="btn btn-primary" style="display: none;">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        
+                
+                            <div>
+                                <label for="img_san2" class="form-label">Image Stadium 2:</label>
+                                <form action="#" th:action="@{/upload}" method="post" enctype="multipart/form-data" class="form" id="uploadForm">
+                                    <div class="mb-3 img-stadium-container">
+                                        <img style="height: auto; width: 100%; max-height: 200px; border: 2px solid rgba(75, 112, 78, 0.5); border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" class="img-stadium img-fluid" th:src="@{${user.img_san2}}" alt="Img_san2">
+                                        <div class="loading-spinner"></div>
+                                    </div>
+                                    <div class="mb-3 text-center">
+                                        <input type="file" class="form-control" name="image" id="imageInput"
+                                            accept="image/gif, image/jpeg, image/png" placeholder="Upload file" onchange="checkFile()">
+                                    </div>
+                                    <div class="text-center d-flex justify-content-center align-items-center">
+                                        <button type="submit" id="submitButton" class="btn btn-primary" style="display: none;">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        
+                          
+                            <div>
+                                <label for="img_san3" class="form-label">Image Stadium 3:</label>
+                                <form action="#" th:action="@{/upload}" method="post" enctype="multipart/form-data" class="form" id="uploadForm">
+                                    <div class="mb-3 img-stadium-container">
+                                        <img style="height: auto; width: 100%; max-height: 200px; border: 2px solid rgba(75, 112, 78, 0.5); border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" class="img-stadium img-fluid" th:src="@{${user.img_san3}}" alt="Img_san3">
+                                        <div class="loading-spinner"></div>
+                                    </div>
+                                    <div class="mb-3 text-center">
+                                        <input type="file" class="form-control" name="image" id="imageInput"
+                                            accept="image/gif, image/jpeg, image/png" placeholder="Upload file" onchange="checkFile()">
+                                    </div>
+                                    <div class="text-center d-flex justify-content-center align-items-center">
+                                        <button type="submit" id="submitButton" class="btn btn-primary" style="display: none;">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+             
+                            <div>
+                                <label for="img_san4" class="form-label">Image Stadium 4:</label>
+                                <form action="#" th:action="@{/upload}" method="post" enctype="multipart/form-data" class="form" id="uploadForm">
+                                    <div class="mb-3 img-stadium-container">
+                                        <img style="height: auto; width: 100%; max-height: 200px; border: 2px solid rgba(75, 112, 78, 0.5); border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" class="img-stadium img-fluid" th:src="@{${user.img_san4}}" alt="Img_san4">
+                                        <div class="loading-spinner"></div>
+                                    </div>
+                                    <div class="mb-3 text-center">
+                                        <input type="file" class="form-control" name="image" id="imageInput"
+                                            accept="image/gif, image/jpeg, image/png" placeholder="Upload file" onchange="checkFile()">
+                                    </div>
+                                    <div class="text-center d-flex justify-content-center align-items-center">
+                                        <button type="submit" id="submitButton" class="btn btn-primary" style="display: none;">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        
+                            
+                            <div>
+                                <label for="img_san5" class="form-label">Image Stadium 5:</label>
+                                <form action="#" th:action="@{/upload}" method="post" enctype="multipart/form-data" class="form" id="uploadForm">
+                                    <div class="mb-3 img-stadium-container">
+                                        <img style="height: auto; width: 100%; max-height: 200px; border: 2px solid rgba(75, 112, 78, 0.5); border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" class="img-stadium img-fluid" th:src="@{${user.img_san5}}" alt="Img_san5">
+                                        <div class="loading-spinner"></div>
+                                    </div>
+                                    <div class="mb-3 text-center">
+                                        <input type="file" class="form-control" name="image" id="imageInput"
+                                            accept="image/gif, image/jpeg, image/png" placeholder="Upload file" onchange="checkFile()">
+                                    </div>
+                                    <div class="text-center d-flex justify-content-center align-items-center">
+                                        <button type="submit" id="submitButton" class="btn btn-primary" style="display: none;">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        
+                    </div>
+
                     <div class="d-flex justify-content-between mt-3">
                         <div class="d-inline-flex">
                             <a th:href="@{/ShowChangePassword}" class="btn btn-outline-secondary me-2">Change Password</a>
                             <div th:if="${session.UserAfterLogin.role.toString() == 'C'}">
-                                <a th:href="@{/ShowEditStadium}" class="btn btn-outline-secondary">Edit Stadium</a>
+                                <a th:href="@{/ShowEditStadium}" class="btn btn-outline-secondary">Stadium</a>
                             </div>
                         </div>
                     
