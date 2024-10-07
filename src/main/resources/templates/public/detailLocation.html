@@ -60,7 +60,8 @@
             </tbody>
         </table>
         <h1 id="user_idsan_check" hidden style="color: aqua;" th:text="${SanDetail.user.uid}"></h1>
-        <h1 id="user_id_check" hidden style="color: red;" th:text="${session.UserAfterLogin.uid}"></h1>
+        <h1 id="user_id_check" hidden style="color: red;" th:if="${session.UserAfterLogin != null}"
+            th:text="${session.UserAfterLogin.uid}"></h1>
         <h1 id="san_id_check" hidden th:text="${SanDetail.san_id}"></h1>
         <h1 id="session_check" hidden th:text="${session.UserAfterLogin != null ? 'true' : 'false'}"></h1>
     </div>
@@ -70,8 +71,11 @@
             var selectedDate = document.getElementById("bookingDate").value;
             var sanId = document.getElementById("san_id_check").textContent;
             var sanDetailUser = document.getElementById("user_idsan_check").textContent;
-            var sessionUser = document.getElementById("user_id_check").textContent;
+           
             var session = document.getElementById("session_check").textContent === 'true';
+            if (session) {
+                var sessionUser = document.getElementById("user_id_check").textContent;
+            }
             if (selectedDate) {
                 fetch(`/getBookingsByDate?sanId=${sanId}&bookingDate=${selectedDate}`)
                     .then(response => response.json())
@@ -82,12 +86,17 @@
 
                         // Populate the table with the new bookings
                         data.forEach(booking => {
-                            let editLink = '';
+                            let editLink = ' ';
 
                             // Check if user can edit (do this check with JavaScript if data is available on the client-side)
-                            if ( (sessionUser === sanDetailUser)) {
+
+                            if ((sessionUser === sanDetailUser)) {
                                 editLink = `<a href="/editBooking/${booking.booking_id}">Edit</a>`;
+                            } else {
+                                editLink = " ";
                             }
+
+
 
                             var row = `<tr>
                             <td>${booking.start_time}</td>
