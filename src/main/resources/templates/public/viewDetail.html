@@ -30,6 +30,8 @@
                 <td th:text="${san.Size.size}">Size</td>
                 <td><img th:src="${san.img}" style="width: auto;" height="50px"></td>
                 <td><a th:href="@{/ShowDetailLocation/{id}(id=${san.san_id})}">View</a></td>
+                <td th:if="${session.UserAfterLogin != null && (session.UserAfterLogin.uid == san.user.uid)}">
+                    <a th:href="@{/addScheduleBooking/{id}(id=${san.san_id})}">Add schedule</a>
             </tr>
         </tbody>
     </table>

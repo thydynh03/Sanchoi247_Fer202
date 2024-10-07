@@ -163,7 +163,7 @@ SELECT * FROM san;
 
 CREATE TABLE Schedulebooking (
     booking_id INT AUTO_INCREMENT PRIMARY KEY,
-    san_id INT,
+    san_id INT, --nên có thêm ngày thuê sân
     start_time TIME,
     end_time TIME,
     status VARCHAR(20), -- 'booked', 'available'
@@ -179,7 +179,10 @@ VALUES
 (14, '13:00:00', '14:30:00', 'available', 100.00),
 (14, '14:30:00', '16:00:00', 'available', 100.00),
 (14, '16:00:00', '17:30:00', 'available', 100.00),
-(14, '17:30:00', '19:00:00', 'booked', 100.00),
+(14, '17:30:00', '19:00:00', 'available', 100.00),
 (14, '19:00:00', '20:30:00', 'available', 100.00),
 (14, '20:30:00', '22:00:00', 'available', 100.00);
+-- tất cả nên là available dựa vào thuộc tính ngày thuê sân ở trên để xác định ngày nào đã thuê và ngày nào chưa thuê
+-- nên thêm table ngày thuê ? nếu như ngày thuê sân không có thì mặc định là available nếu như ngày thuê sân có thì booked
+
 
