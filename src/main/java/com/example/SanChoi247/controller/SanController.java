@@ -15,10 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.SanChoi247.model.entity.Booking;
 import com.example.SanChoi247.model.entity.San;
 import com.example.SanChoi247.model.entity.ScheduleBooking;
-import com.example.SanChoi247.model.repo.BookingRepo;
 import com.example.SanChoi247.model.repo.SanRepo;
 import com.example.SanChoi247.model.repo.ScheduleBookingRepo;
 

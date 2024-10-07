@@ -124,7 +124,7 @@ public class SanRepo {
         PreparedStatement ps = con.prepareStatement("SELECT * FROM san WHERE uid = ?");
         ps.setInt(1, uid);
         ResultSet rs = ps.executeQuery(); // Sử dụng executeQuery() để trả về ResultSet
-        
+
         // Duyệt qua toàn bộ kết quả trả về
         while (rs.next()) {
             int san_id = rs.getInt("san_id");
@@ -138,20 +138,34 @@ public class SanRepo {
             String img = rs.getString("img");
             int is_approve = rs.getInt("is_approve");
             int eyeview = rs.getInt("eyeview");
-    
+
             // Tạo đối tượng San với các dữ liệu vừa lấy
             San san = new San(san_id, user, loaiSan, vi_tri_san, size, img, is_approve, eyeview);
-    
+
             // Thêm đối tượng San vào danh sách
             sanList.add(san);
         }
-        
+
         // Đóng kết nối và tài nguyên
         rs.close();
         ps.close();
         con.close();
-        
+
         return sanList;
     }
-    
+
+    public void save(San san) throws Exception {
+        Class.forName(Baseconnection.nameClass);
+        Connection con = DriverManager.getConnection(Baseconnection.url, Baseconnection.username,
+                Baseconnection.password);
+        PreparedStatement ps = con.prepareStatement(
+                "UPDATE users SET loai_san_id =?, vi_tri_san = ?, size_id = ?, img = ? WHERE san_id = ?");
+        ps.setInt(1, san.getLoaiSan().getLoai_san_id());
+        ps.setString(2, san.getVi_tri_san());
+        ps.setInt(3, san.getSize().getSize_id());
+        ps.setString(4, san.getImg());
+        ps.executeUpdate();
+        ps.close();
+        con.close();
+    }
 }
