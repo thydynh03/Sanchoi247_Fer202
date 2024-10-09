@@ -68,10 +68,9 @@
 
     <script>
         function updateBookings() {
-            var selectedDate = document.getElementById("bookingDate").value;
+            var selectedDate = document.getElementById("bookingDate").value; // lấy giá trị trong ô input ngày
             var sanId = document.getElementById("san_id_check").textContent;
             var sanDetailUser = document.getElementById("user_idsan_check").textContent;
-           
             var session = document.getElementById("session_check").textContent === 'true';
             if (session) {
                 var sessionUser = document.getElementById("user_id_check").textContent;
