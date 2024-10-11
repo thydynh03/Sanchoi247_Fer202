@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SanChoi247</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
@@ -30,7 +31,7 @@
 
         .navbar-nav .nav-link:hover {
             transform: translateY(-5px); /* Đẩy lên 5px khi hover */
-            color: #3b724e; /* Chuyển thành màu vàng khi hover */
+            color: #759C83; /* Chuyển thành màu vàng khi hover */
         }
         .navbar-nav .nav-link {
             color: #000;
@@ -42,7 +43,7 @@
 
         .navbar-nav .nav-link:hover {
             transform: translateY(-5px); /* Đẩy lên 5px khi hover */
-            color: #3b724e; /* Chuyển thành màu vàng khi hover */
+            color: #759C83; /* Chuyển thành màu vàng khi hover */
         }
 
         .navbar-nav .nav-link {
@@ -51,10 +52,10 @@
 
         .navbar-nav .nav-link:hover {
             transform: translateY(-5px); /* Đẩy lên 5px khi hover */
-            color: #3b724e; /* Chuyển thành màu vàng khi hover */
+            color: #759C83; /* Chuyển thành màu vàng khi hover */
         }
         .location-icon {
-            color: #3b724e; /* Màu sắc */
+            color: #759C83; /* Màu sắc */
             margin-right: 5px; /* Khoảng cách giữa biểu tượng và văn bản */
             vertical-align: middle; /* Căn chỉnh biểu tượng với văn bản */
             font-size: 1.2em; /* Kích thước biểu tượng */
@@ -102,13 +103,13 @@
             height: auto; /* Đảm bảo chiều cao tự động để duy trì tỷ lệ khung hình */
         }
         .title-h2 {
-            color: #3b724e;
+            color: #759C83;
             margin-top: 30px;
             margin-bottom: 30px;
         }
 
         .title-h1 {
-            color: #3b724e;
+            color: #759C83;
             margin-top: 30px;
             margin-bottom: 30px;
             text-align: center;
@@ -141,11 +142,11 @@
         .sport-btn p {
             margin: 0;
             font-weight: bold;
-            color: #3b724e;
+            color: #759C83;
         }
         
         .footerComponent-footer {
-            background-color: #3b724e; /* Màu nền đỏ */
+            background-color: #759C83; /* Màu nền đỏ */
             color: #ffffff; /* Màu chữ trắng */
             padding: 20px 0;
         }
@@ -249,9 +250,58 @@
         }
 
         .dropdown-menu .dropdown-item:hover {
-        background-color: #f1f1f1;
+        background-color: #ebf0ed;
         color: #000;
         transform: translateY(-5px);
+        }
+        .grass-theme {
+            background: url('https://example.com/grass-background.jpg') no-repeat center center;
+            background-size: cover;
+            color: white;
+        }
+        .modal-header, .modal-footer {
+            background-color: #759C83;
+            text-align: center;
+        }
+        .list-group-item {
+            background-color: #ebf0ed;
+            color: black;
+        }
+        .modal-title {
+            color: black;
+        }
+        .btn-close {
+            filter: invert(1);
+        }
+        .item-feedback{
+            text-decoration: none;
+        }
+        .list-group-item {
+            display: block;
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #ebf0ed;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s;
+            text-decoration: none;
+            color: black;
+        }
+
+        .list-group-item:hover {
+            background-color: #d4e6d2;
+            transform: scale(1.02);
+            color: black;
+        }
+
+        .list-group-item h6 {
+            margin: 0;
+            font-weight: bold;
+        }
+
+        .list-group-item p {
+            margin: 5px 0 0;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -270,19 +320,19 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="scrollToTop(); return false;">HOME</a>
+                        <a class="nav-link" th:href="@{/}">HOME</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle-no-caret" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">SPORTS</a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                            <li><a class="dropdown-item" href="#">FOOTBALL</a></li>
-                            <li><a class="dropdown-item" href="#">TENNIS</a></li>
-                            <li><a class="dropdown-item" href="#">PICKLEBALL</a></li>
-                            <li><a class="dropdown-item" href="#">BASKETBALL</a></li>
-                            <li><a class="dropdown-item" href="#">VOLLEYBALL</a></li>
-                            <li><a class="dropdown-item" href="#">TABLE TENNIS</a></li>
-                            <li><a class="dropdown-item" href="#">GOLF</a></li>
-                            <li><a class="dropdown-item" href="#">BADMINTON</a></li>
+                            <li><a class="dropdown-item" href="#">Football</a></li>
+                            <li><a class="dropdown-item" href="#">Tennis</a></li>
+                            <li><a class="dropdown-item" href="#">Pickleball</a></li>
+                            <li><a class="dropdown-item" href="#">Basketball</a></li>
+                            <li><a class="dropdown-item" href="#">Volleyball</a></li>
+                            <li><a class="dropdown-item" href="#">Table tennis</a></li>
+                            <li><a class="dropdown-item" href="#">Golf</a></li>
+                            <li><a class="dropdown-item" href="#">Badminton</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -304,7 +354,7 @@
                         <a class="nav-link" th:href="@{/ShowBlog}">BLOG</a>
                     </li>
                     <li th:if="${session.UserAfterLogin == null}" class="nav-item">
-                        <a class="nav-link" th:href="@{/Login}">SIGN IN</a>
+                        <a class="nav-link" th:href="@{/Login}" style="color: black; background-color: #759C83; border-radius: 10px;">SIGN IN</a>
                     </li>
                     <!-- User avatar and dropdown -->
                     <li th:if="${session.UserAfterLogin != null}" class="nav-item dropdown">
@@ -313,16 +363,42 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                             <li><a class="dropdown-item" th:href="@{/ShowEditProfile}">See All Profile</a></li>
+                            <li th:if="${session.UserAfterLogin != null and session.UserAfterLogin.role == 'C' }"><a class="dropdown-item" href="#">See Stadium</a></li>
                             <li><a class="dropdown-item" href="#">See Booking</a></li>
                             <li><a class="dropdown-item" href="#">Help & Support</a></li>
-                            <li><a class="dropdown-item" href="#">Give Feedback</a></li>
-                            <li><a class="dropdown-item" th:href="@{/Logout}" style="color: red;">Log Out</a></li>
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#feedbackModal">Give Feedback</a></li>
+                            <li><a class="dropdown-item" th:href="@{/Logout}" style="color: #759C83;">Log Out</a></li>
                         </ul>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
+
+    
+    <!-- Modal -->
+    <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h4 class="modal-title" id="feedbackModalLabel">Give Feedback To SanChoi247</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <h6>Help us improve</h6>
+                        <p>Give feedback about your experience.</p>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <h6>Something went wrong</h6>
+                        <p>Let us know about a broken feature.</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
 
     <!-- Banner Video -->
     <div class="video-container">
@@ -357,7 +433,7 @@
                             </select>
                         </div>
                         <div class="col-md-3 d-grid">
-                            <button type="submit" class="btn" style="background-color: #3b724e; color: white; height: 55px; font-size: 18px;">Search</button>
+                            <button type="submit" class="btn" style="background-color: #759C83; color: white; height: 55px; font-size: 18px;">Search</button>
                         </div>
                     </form>
                 </div>
@@ -463,7 +539,7 @@
                             <i class="fas fa-map-marker-alt location-icon"></i>
                             <span th:text="${San.address}">Address here</span>
                         </p>
-                        <a th:href="@{/ViewDetail/{id}(id=${San.uid})}" class="btn" style="background-color: #3b724e; color: white; border: none;">View</a>
+                        <a th:href="@{/ViewDetail/{id}(id=${San.uid})}" class="btn" style="background-color: #759C83; color: white; border: none;">View</a>
                     </div>
                 </div>
             </div>
@@ -482,7 +558,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Why did Ederson stay at Man City?</h5>
                         <p class="card-text">Goalkeeper Ederson is still playing for Man City because no club could meet the transfer fee when he wanted to leave last summer.</p>
-                        <a href="https://vnexpress.net/vi-sao-ederson-o-lai-man-city-4801711.html" class="btn btn-primary" style="background-color: #3b724e; border: 2px solid #3b724e" target="_blank">Read More</a>
+                        <a href="https://vnexpress.net/vi-sao-ederson-o-lai-man-city-4801711.html" class="btn btn-primary" style="background-color: #759C83; border: 2px solid #759C83" target="_blank">Read More</a>
                     </div>
                 </div>
             </div>
@@ -492,7 +568,7 @@
                     <div class="card-body">
                         <h5 class="card-title">China's rise in men's tennis</h5>
                         <p class="card-text">After a few female players emerged, Chinese men's tennis has recently made a splash as it has begun to produce ATP Tour champions.</p>
-                        <a href="https://vnexpress.net/su-troi-day-cua-trung-quoc-o-lang-quan-vot-nam-4801606.html" class="btn btn-primary" style="background-color: #3b724e; border: 2px solid #3b724e" target="_blank">Read More</a>
+                        <a href="https://vnexpress.net/su-troi-day-cua-trung-quoc-o-lang-quan-vot-nam-4801606.html" class="btn btn-primary" style="background-color: #759C83; border: 2px solid #759C83" target="_blank">Read More</a>
                     </div>
                 </div>
             </div>
@@ -502,7 +578,7 @@
                     <div class="card-body">
                         <h5 class="card-title">VFF fined nearly 250 million VND</h5>
                         <p class="card-text">The Vietnam Football Federation (VFF) was fined for failing to meet the medical requirements of the Asian Games taking place in September 2023.</p>
-                        <a href="https://vnexpress.net/vff-bi-phat-gan-250-trieu-dong-4801649.html" class="btn btn-primary" style="background-color: #3b724e; border: 2px solid #3b724e" target="_blank">Read More</a>
+                        <a href="https://vnexpress.net/vff-bi-phat-gan-250-trieu-dong-4801649.html" class="btn btn-primary" style="background-color: #759C83; border: 2px solid #759C83" target="_blank">Read More</a>
                     </div>
                 </div>
             </div>
@@ -603,7 +679,7 @@
     <script>
         AOS.init(); // Khởi tạo thư viện AOS
     </script>
-    
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

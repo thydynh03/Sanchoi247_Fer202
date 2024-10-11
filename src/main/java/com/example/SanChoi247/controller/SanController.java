@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,22 +48,13 @@ public class SanController {
         return "public/detailLocation";
     }
 
+    
+
     // --------------------------------------------------------------------------------------//
-
-    @PostMapping("/SearchSanByTenSan")
-    public String searchSanByTenSan(@RequestParam("Search") String Search, Model model) throws Exception {
-        ArrayList<User> userList = userRepo.getAllUser();
-        ArrayList<User> findSan = new ArrayList<>();
-        for (User tenSan : userList) {
-            if (tenSan != null &&
-                    tenSan.getTen_san().toLowerCase().contains((Search.toLowerCase()))) {
-                findSan.add(tenSan);
-            } else {
-                model.addAttribute("measeage", "not found");
-            }
-        }
-        model.addAttribute("SanList", findSan);
-        return "public/index";
-    }
-
+    // @PostMapping("/incrementEyeview")
+    // public ResponseEntity<?> incrementEyeview(@RequestParam int sanId) {
+    // sanService.incrementEyeview(sanId);
+    // int newEyeview = sanService.getEyeview(sanId);
+    // return ResponseEntity.ok(newEyeview);
+    // }
 }

@@ -59,6 +59,25 @@ create table booking(
     vnpay_data json
 );
 
+CREATE TABLE Schedulebooking (
+    booking_id INT AUTO_INCREMENT PRIMARY KEY,
+    san_id INT,
+    start_time TIME,
+    end_time TIME,
+    status VARCHAR(20), -- 'booked', 'available'
+    price float, -- Thêm trường giá tiền
+    FOREIGN KEY (san_id) REFERENCES san(san_id)
+);
+
+create table feedback(
+	feedback_id int auto_increment primary key,
+    uid int,
+    foreign key (uid) references users(uid),
+    content text,
+    created_at datetime,
+    updated_at datetime
+);
+
 create table rating(
 	rating_id int auto_increment primary key,
     star int,
@@ -161,15 +180,7 @@ INSERT INTO san (uid, loai_san_id, vi_tri_san, size_id, img, is_approve) VALUES
 (2, 4, '1', 4, 'https://bongrotuoitre.vn/wp-content/uploads/2020/07/kich-thuoc-san-bong-ro.jpg', 1),
 (2, 4, '2', 4, 'https://bongrotuoitre.vn/wp-content/uploads/2020/07/kich-thuoc-san-bong-ro.jpg', 1);
 
-CREATE TABLE Schedulebooking (
-    booking_id INT AUTO_INCREMENT PRIMARY KEY,
-    san_id INT,
-    start_time TIME,
-    end_time TIME,
-    status VARCHAR(20), -- 'booked', 'available'
-    price float, -- Thêm trường giá tiền
-    FOREIGN KEY (san_id) REFERENCES san(san_id)
-);
+
 INSERT INTO Schedulebooking (san_id, start_time, end_time, status, price)
 VALUES 
 (14, '07:00:00', '08:30:00', 'available', 100.00),
@@ -189,4 +200,4 @@ insert into users(name, dob, gender, phone, email, username, password, avatar,te
 ('Ngọc Khánh', '2004-02-02', 'M', '1859305738', 'concatre3@gmail.com', 'h', 'h', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfA74jKoBCGxNadWXx6CI2uQiOrdOyh53LPQ&s','Đảo Xanh Pickleball','Đảo Xanh 3, Hoà Cường Bắc, Hải Châu, Đà Nẵng', 'https://uyenuong.net/wp-content/uploads/2022/06/dien-tich-san-5-nguoi-3.jpg','https://www.tapdoanconhantao.com/wp-content/uploads/2019/07/thu-nhap-cao-nho-kinh-doanh-san-bong-da-co-nhan-tao.jpg','https://thegioiconhantao.com.vn/wp-content/uploads/2016/11/dien1.jpg','https://golfstore.vn/images/pro/1_3165.jpg','https://foba.vn/wp-content/uploads/2020/09/Hinh-anh-%E2%80%93-2020-Hoan-Thanh-Cong-Trinh-San-Bong-Binh-Thuan-1.jpg',0,'C'),
 ('Đoàn Công Sơn', '2004-02-02', 'M', '1919191857', 'concatre4@gmail.com', 'e', 'e', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfA74jKoBCGxNadWXx6CI2uQiOrdOyh53LPQ&s','Sân Bóng Đá Trưng Vương','560 Trưng Nữ Vương, Hòa Thuận Tây, Hải Châu, Đà Nẵng', 'https://uyenuong.net/wp-content/uploads/2022/06/dien-tich-san-5-nguoi-3.jpg','https://www.tapdoanconhantao.com/wp-content/uploads/2019/07/thu-nhap-cao-nho-kinh-doanh-san-bong-da-co-nhan-tao.jpg','https://thegioiconhantao.com.vn/wp-content/uploads/2016/11/dien1.jpg','https://golfstore.vn/images/pro/1_3165.jpg','https://foba.vn/wp-content/uploads/2020/09/Hinh-anh-%E2%80%93-2020-Hoan-Thanh-Cong-Trinh-San-Bong-Binh-Thuan-1.jpg',0,'C'),
 ('Trê', '2004-02-02', 'M', '0186947382', 'concatre1@gmail.com', 'f', 'f', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfA74jKoBCGxNadWXx6CI2uQiOrdOyh53LPQ&s','Sân bóng rổ Jumpshots','02 Cách Mạng Tháng 8, Hoà Cường Nam, Hải Châu, Đà Nẵng', 'https://uyenuong.net/wp-content/uploads/2022/06/dien-tich-san-5-nguoi-3.jpg','https://www.tapdoanconhantao.com/wp-content/uploads/2019/07/thu-nhap-cao-nho-kinh-doanh-san-bong-da-co-nhan-tao.jpg','https://thegioiconhantao.com.vn/wp-content/uploads/2016/11/dien1.jpg','https://golfstore.vn/images/pro/1_3165.jpg','https://foba.vn/wp-content/uploads/2020/09/Hinh-anh-%E2%80%93-2020-Hoan-Thanh-Cong-Trinh-San-Bong-Binh-Thuan-1.jpg',0,'C'),
-('Ngọc Sơn', '2004-02-02', 'M', '1750375945', 'concatre2@gmail.com', 'g', 'g', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfA74jKoBCGxNadWXx6CI2uQiOrdOyh53LPQ&s','Sân Tập Golf DNC','99 Xuân Thủy, Khuê Trung, Cẩm Lệ, Đà Nẵng', 'https://uyenuong.net/wp-content/uploads/2022/06/dien-tich-san-5-nguoi-3.jpg','https://www.tapdoanconhantao.com/wp-content/uploads/2019/07/thu-nhap-cao-nho-kinh-doanh-san-bong-da-co-nhan-tao.jpg','https://thegioiconhantao.com.vn/wp-content/uploads/2016/11/dien1.jpg','https://golfstore.vn/images/pro/1_3165.jpg','https://foba.vn/wp-content/uploads/2020/09/Hinh-anh-%E2%80%93-2020-Hoan-Thanh-Cong-Trinh-San-Bong-Binh-Thuan-1.jpg',0,'C');
+('Ngọc Sơn', '2004-02-02', 'M', '1750375945', 'concatre2@gmail.com', 'g', 'g', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfA74jKoBCGxNadWXx6CI2uQiOrdOyh53LPQ&s','Sân Tập Golf DNC','99 Đường Xuân Thủy, Khuê Trung, Quận Cẩm Lệ, Đà Nẵng', 'https://uyenuong.net/wp-content/uploads/2022/06/dien-tich-san-5-nguoi-3.jpg','https://www.tapdoanconhantao.com/wp-content/uploads/2019/07/thu-nhap-cao-nho-kinh-doanh-san-bong-da-co-nhan-tao.jpg','https://thegioiconhantao.com.vn/wp-content/uploads/2016/11/dien1.jpg','https://golfstore.vn/images/pro/1_3165.jpg','https://foba.vn/wp-content/uploads/2020/09/Hinh-anh-%E2%80%93-2020-Hoan-Thanh-Cong-Trinh-San-Bong-Binh-Thuan-1.jpg',0,'C');
