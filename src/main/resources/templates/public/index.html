@@ -10,6 +10,15 @@
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
+        .navbar-brand img {
+            height: 60px;
+            border-radius: 50%; /* Thêm thuộc tính border-radius để làm hình tròn */
+        }
+        .navbar-brand img {
+            height: 60px;
+            width: 60px; /* Thêm thuộc tính width để giữ kích thước hình ảnh */
+            border-radius: 50%; /* Thêm thuộc tính border-radius để làm hình tròn */
+        }
         .navbar-nav .nav-link {
             color: #000;
             margin: 0 10px;
@@ -41,14 +50,6 @@
         }
 
         .navbar-nav .nav-link:hover {
-            transform: translateY(-5px); /* Đẩy lên 5px khi hover */
-            color: #3b724e; /* Chuyển thành màu vàng khi hover */
-        }
-        .dropdown-menu .dropdown-item {
-            transition: transform 0.3s ease, color 0.3s ease; /* Thêm hiệu ứng chuyển động */
-        }
-
-        .dropdown-menu .dropdown-item:hover {
             transform: translateY(-5px); /* Đẩy lên 5px khi hover */
             color: #3b724e; /* Chuyển thành màu vàng khi hover */
         }
@@ -90,25 +91,7 @@
             height: 40px;
             border-radius: 50%;
         }
-        /* Các tùy chọn trong dropdown */
-        .dropdown-menu .dropdown-item {
-            font-size: 18px; /* Tăng kích thước chữ */
-            font-weight: bold; /* Làm cho chữ đậm */
-            color: #333; /* Màu chữ */
-            padding: 15px 20px; /* Tăng khoảng cách padding */
-        }
-
-        /* Thay đổi khi người dùng di chuột vào */
-        .dropdown-menu .dropdown-item:hover {
-            background-color: #f1f1f1; /* Màu nền khi hover */
-            color: #000; /* Màu chữ khi hover */
-        }
-
-        /* Tùy chọn thêm màu sắc đặc biệt cho nút đăng xuất */
-        .dropdown-item.logout {
-            color: red; /* Làm cho chữ đăng xuất có màu đỏ */
-            font-weight: bold; /* Tăng độ đậm chữ */
-        }
+    
         .banner-video-2 {
             margin-top: 15px;
             width: 100%; /* Đặt chiều rộng 100% để hình ảnh chiếm toàn bộ chiều rộng của khung chứa */
@@ -230,7 +213,46 @@
         .fas, .fab {
             margin-right: 5px; /* Khoảng cách giữa biểu tượng và văn bản */
         }
+        .dropdown-menu .dropdown-item {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            padding: 15px 20px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
 
+            .dropdown-menu .dropdown-item:hover {
+            background-color: #f1f1f1;
+            color: #000;
+        }
+
+            .dropdown-item.logout {
+            color: red;
+            font-weight: bold;
+        }
+
+            .dropdown:hover .dropdown-menu {
+            display: block;
+            margin-top: 0;
+        }
+
+            .dropdown-menu {
+            margin-top: 10px;
+            transition: margin-top 0.5s;
+        }
+        .dropdown-menu .dropdown-item {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+        padding: 15px 20px;
+        transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+        }
+
+        .dropdown-menu .dropdown-item:hover {
+        background-color: #f1f1f1;
+        color: #000;
+        transform: translateY(-5px);
+        }
     </style>
 </head>
 
@@ -239,7 +261,7 @@
     <!-- Sticky Navbar -->
     <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" th:href="@{/}">
                 <img src="https://res.cloudinary.com/dvwn7bgut/image/upload/v1728240612/nptm9pv1ifhzdrogjfk8.webp" alt="Logo"> <!-- Replace with your logo URL -->
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -250,29 +272,36 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#" onclick="scrollToTop(); return false;">HOME</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">FOOTBALL</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle-no-caret" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">SPORTS</a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="#">FOOTBALL</a></li>
+                            <li><a class="dropdown-item" href="#">TENNIS</a></li>
+                            <li><a class="dropdown-item" href="#">PICKLEBALL</a></li>
+                            <li><a class="dropdown-item" href="#">BASKETBALL</a></li>
+                            <li><a class="dropdown-item" href="#">VOLLEYBALL</a></li>
+                            <li><a class="dropdown-item" href="#">TABLE TENNIS</a></li>
+                            <li><a class="dropdown-item" href="#">GOLF</a></li>
+                            <li><a class="dropdown-item" href="#">BADMINTON</a></li>
+                        </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">TENNIS</a>
+                        <a class="nav-link" href="#">INTRODUCTION</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">PICKLEBALL</a>
+                        <a class="nav-link" href="#">POLICIES</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">BASKETBALL</a>
+                        <a class="nav-link" href="#">TERMS</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">VOLLEYBALL</a>
+                        <a class="nav-link" th:href="@{/ShowForOwners}">FOR OWNERS</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">TABLE TENNIS</a>
+                        <a class="nav-link" href="#">CONTACT</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">GOLF</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">BADMINTON</a>
+                    <li th:if="${session.UserAfterLogin == null}" class="nav-item">
+                        <a class="nav-link" th:href="@{/ShowBlog}">BLOG</a>
                     </li>
                     <li th:if="${session.UserAfterLogin == null}" class="nav-item">
                         <a class="nav-link" th:href="@{/Login}">SIGN IN</a>
@@ -284,9 +313,10 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                             <li><a class="dropdown-item" th:href="@{/ShowEditProfile}">See All Profile</a></li>
+                            <li><a class="dropdown-item" href="#">See Booking</a></li>
                             <li><a class="dropdown-item" href="#">Help & Support</a></li>
                             <li><a class="dropdown-item" href="#">Give Feedback</a></li>
-                            <li><a class="dropdown-item" th:href="@{/Logout}">Log Out</a></li>
+                            <li><a class="dropdown-item" th:href="@{/Logout}" style="color: red;">Log Out</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -303,38 +333,36 @@
     </div>
 
         <!-- Enlarged Search Bar with Margins -->
-    <div class="container mt-5 mb-5" data-aos="fade-up" data-aos-duration="1000">  <!-- Added larger top and bottom margin -->
-        <div class="card" style="background-color: #ebf0ed; border: none;">
-            <div class="card-body">
-                <form class="row g-3">
-                    <!-- Search by Stadium Name -->
-                    <div class="col-md-3">
-                        <input type="text" class="form-control form-control-lg" placeholder="Name" aria-label="Name" style="height: 55px;"> <!-- Increased height -->
-                    </div>
-
-                    <!-- Search by Location -->
-                    <div class="col-md-3">
-                        <input type="text" class="form-control form-control-lg" placeholder="Location" aria-label="Location" style="height: 55px;"> <!-- Increased height -->
-                    </div>
-
-                    <!-- Search by Sport Type -->
-                    <div class="col-md-3">
-                        <select class="form-select form-select-lg" aria-label="Loại thể thao" style="height: 55px;"> <!-- Increased height -->
-                            <option selected>Type</option>
-                            <option value="1">Football</option>
-                            <option value="2">Tennis</option>
-                            <option value="3">Basketball</option>
-                        </select>
-                    </div>
-
-                    <!-- Search Button -->
-                    <div class="col-md-3 d-grid">
-                        <button type="submit" class="btn" style="background-color: #3b724e; color: white; height: 55px; font-size: 18px;">Search</button> <!-- Increased button size -->
-                    </div>
-                </form>
+        <div class="container mt-5 mb-5" data-aos="fade-up" data-aos-duration="1000">
+            <div class="card" style="background-color: #ebf0ed; border: none;">
+                <div class="card-body">
+                    <form class="row g-3" th:action="@{/SearchSanByTenSan}" method="post">
+                        <div class="col-md-3">
+                            <input type="text" name="Search" class="form-control form-control-lg" placeholder="Name" aria-label="Name" style="height: 55px;">
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" name="Location" class="form-control form-control-lg" placeholder="Location" aria-label="Location" style="height: 55px;">
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select form-select-lg" name="SportType" aria-label="Loại thể thao" style="height: 55px;">
+                                <option selected>Type</option>
+                                <option value="1">Football</option>
+                                <option value="2">Tennis</option>
+                                <option value="3">Pickleball</option>
+                                <option value="4">Basketball</option>
+                                <option value="5">Volleyball</option>
+                                <option value="6">Table Tennis</option>
+                                <option value="7">Golf</option>
+                                <option value="8">Badminton</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 d-grid">
+                            <button type="submit" class="btn" style="background-color: #3b724e; color: white; height: 55px; font-size: 18px;">Search</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
-    </div>
+        </div>        
 
     <div class="title-h1">
         <h1>SPORT</h1>
@@ -429,7 +457,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" style="background-color: #ebf0ed;">
                         <h5 class="card-title" th:text="${San.ten_san}">Card title</h5>
                         <p class="card-text">
                             <i class="fas fa-map-marker-alt location-icon"></i>
@@ -438,6 +466,65 @@
                         <a th:href="@{/ViewDetail/{id}(id=${San.uid})}" class="btn" style="background-color: #3b724e; color: white; border: none;">View</a>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="title-h1">
+        <h1>SPORT NEWS</h1>
+    </div>
+    
+    <div class="container">
+        <div class="row" data-aos="fade-up" data-aos-duration="1000">
+            <div class="col-md-4 mb-4">
+                <div class="card" style="background-color: #ebf0ed;">
+                    <img src="https://res.cloudinary.com/dvwn7bgut/image/upload/v1728393453/ejnziswtlomn0iwfuap4.jpg" class="card-img-top" alt="News Image">
+                    <div class="card-body">
+                        <h5 class="card-title">Why did Ederson stay at Man City?</h5>
+                        <p class="card-text">Goalkeeper Ederson is still playing for Man City because no club could meet the transfer fee when he wanted to leave last summer.</p>
+                        <a href="https://vnexpress.net/vi-sao-ederson-o-lai-man-city-4801711.html" class="btn btn-primary" style="background-color: #3b724e; border: 2px solid #3b724e" target="_blank">Read More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card" style="background-color: #ebf0ed;">
+                    <img src="https://res.cloudinary.com/dvwn7bgut/image/upload/v1728393389/vvmssb7ca3nlsxvvaz0v.jpg" class="card-img-top" alt="News Image">
+                    <div class="card-body">
+                        <h5 class="card-title">China's rise in men's tennis</h5>
+                        <p class="card-text">After a few female players emerged, Chinese men's tennis has recently made a splash as it has begun to produce ATP Tour champions.</p>
+                        <a href="https://vnexpress.net/su-troi-day-cua-trung-quoc-o-lang-quan-vot-nam-4801606.html" class="btn btn-primary" style="background-color: #3b724e; border: 2px solid #3b724e" target="_blank">Read More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card" style="background-color: #ebf0ed;">
+                    <img src="https://res.cloudinary.com/dvwn7bgut/image/upload/v1728393534/ygms5yc0tu1k5akelbk3.jpg" class="card-img-top" alt="News Image">
+                    <div class="card-body">
+                        <h5 class="card-title">VFF fined nearly 250 million VND</h5>
+                        <p class="card-text">The Vietnam Football Federation (VFF) was fined for failing to meet the medical requirements of the Asian Games taking place in September 2023.</p>
+                        <a href="https://vnexpress.net/vff-bi-phat-gan-250-trieu-dong-4801649.html" class="btn btn-primary" style="background-color: #3b724e; border: 2px solid #3b724e" target="_blank">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container text-center my-5">
+        <div class="row">
+            <div class="col-md-4" >
+                <img src="https://res.cloudinary.com/dvwn7bgut/image/upload/v1728394960/sleoeu641yavfbzamxfi.png" alt="Field Icon" class="mb-3" style="height: 300px; width: 400px;">
+                <h5>Search for Field Locations</h5>
+                <p>Comprehensive field data, continuously updated, helps you easily search by desired area.</p>
+            </div>
+            <div class="col-md-4">
+                <img src="https://res.cloudinary.com/dvwn7bgut/image/upload/v1728394960/oncyvpgujixerucunwyi.png" alt="Calendar Icon" class="mb-3"style="height: 300px; width: 400px;">
+                <h5>Book Online</h5>
+                <p>No need for direct visits or phone calls. You can book a field from anywhere with internet access.</p>
+            </div>
+            <div class="col-md-4">
+                <img src="https://res.cloudinary.com/dvwn7bgut/image/upload/v1728394961/ltzhfixmmtfplh70zihh.png" alt="Match Icon" class="mb-3"style="height: 300px; width: 400px;">
+                <h5>Find Teams, Set Matches</h5>
+                <p>Search and connect with sports teams, build a vibrant and strong sports community.</p>
             </div>
         </div>
     </div>
@@ -501,6 +588,8 @@
     <div class="copyright">
         SanChoi247 - Made by Nguyễn Đình Bảo Ân 
     </div>
+
+    
     
     <script>
         function scrollToTop() {
