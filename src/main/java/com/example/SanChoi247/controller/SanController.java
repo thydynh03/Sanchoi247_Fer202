@@ -1,17 +1,20 @@
 package com.example.SanChoi247.controller;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.SanChoi247.model.entity.San;
 import com.example.SanChoi247.model.entity.ScheduleBooking;
@@ -42,7 +45,6 @@ public class SanController {
         San san = sanRepo.getSanById(sid);
         List<ScheduleBooking> bookings = scheduleBookingRepo.getAvailableBookings(sid);
 
-        // Thêm dữ liệu vào model để hiển thị trên view
         model.addAttribute("bookings", bookings);
         model.addAttribute("SanDetail", san);
         return "public/detailLocation";
@@ -57,4 +59,15 @@ public class SanController {
     // int newEyeview = sanService.getEyeview(sanId);
     // return ResponseEntity.ok(newEyeview);
     // }
+    @GetMapping("/getBookingsByDate")
+    @ResponseBody
+    public List<ScheduleBooking> getBookingsByDate(
+            @RequestParam("sanId") int sanId, 
+            @RequestParam("bookingDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate bookingDate) throws Exception {
+        
+        List<ScheduleBooking> bookings = scheduleBookingRepo.getAvailableBookingsByDate(sanId, bookingDate);
+        return bookings;
+    }
+    
+
 }

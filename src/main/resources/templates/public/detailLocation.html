@@ -1,60 +1,121 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chi tiết sân</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> <!-- Bootstrap for styling -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Bootstrap for styling -->
 </head>
+
 <body>
 
     <div class="container mt-5">
-    <h1 class="text-center">Chi tiết sân</h1>
+        <h1 class="text-center">Chi tiết sân</h1>
 
-    <!-- Hiển thị chi tiết sân -->
-    <div class="card mb-4">
-        <div class="card-body">
-            <h5 class="card-title">Vị trí sân: <span th:text="${SanDetail.vi_tri_san}"></span></h5>
-            <p class="card-text">Loại sân: <span th:text="${SanDetail.loaiSan.loai_san_id}"></span></p>
-            <p class="card-text">Kích thước sân: <span th:text="${SanDetail.size.size_id}"></span></p>
-            <p class="card-text">Số lượt xem: <span th:text="${SanDetail.eyeview}"></span></p>
-            <p class="card-text">Trạng thái duyệt: <span th:text="${SanDetail.is_approve}"></span></p>
-            <img th:src="@{${SanDetail.img}}" alt="Image of San" class="img-fluid"/>
+        <!-- Hiển thị chi tiết sân -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Vị trí sân: <span th:text="${SanDetail.vi_tri_san}"></span></h5>
+                <p class="card-text">Loại sân: <span th:text="${SanDetail.loaiSan.loai_san_id}"></span></p>
+                <p class="card-text">Kích thước sân: <span th:text="${SanDetail.size.size_id}"></span></p>
+                <p class="card-text">Số lượt xem: <span th:text="${SanDetail.eyeview}"></span></p>
+                <p class="card-text">Trạng thái duyệt: <span th:text="${SanDetail.is_approve}"></span></p>
+                <img th:src="@{${SanDetail.img}}" alt="Image of San" class="img-fluid" />
+            </div>
         </div>
+
+        <!-- Chọn ngày -->
+        <!-- Chọn ngày -->
+        <div class="form-group">
+            <label for="bookingDate">Chọn ngày:</label>
+            <input type="date" id="bookingDate" class="form-control" onchange="updateBookings()" />
+        </div>
+
+        <!-- Hiển thị danh sách các booking -->
+        <h2 class="text-center">Danh sách khung giờ đặt sân</h2>
+        <table class="table table-bordered table-striped" id="timeSlotsTable">
+            <thead>
+                <tr>
+                    <th>Thời gian bắt đầu</th>
+                    <th>Thời gian kết thúc</th>
+                    <th>Trạng thái</th>
+                    <th>Giá</th>
+                    <th>Booking</th>
+                    <th th:if="${session.UserAfterLogin != null && (session.UserAfterLogin.uid == SanDetail.user.uid)}">
+                        Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="booking : ${bookings}">
+                    <!-- <td th:text="${#temporals.format(booking.start_time, 'HH:mm')}"></td>
+                    <td th:text="${#temporals.format(booking.end_time, 'HH:mm')}"></td>
+                    <td th:text="${booking.status}"></td>
+                    <td th:text="${booking.price}"></td>
+                    <td>Book</td>
+                    <td th:if="${session.UserAfterLogin != null && (session.UserAfterLogin.uid == SanDetail.user.uid)}">
+                        <a th:href="@{/editBooking/{id}(id=${booking.booking_id})}">Edit</a> -->
+                </tr>
+            </tbody>
+        </table>
+        <h1 id="user_idsan_check" hidden style="color: aqua;" th:text="${SanDetail.user.uid}"></h1>
+        <h1 id="user_id_check" hidden style="color: red;" th:if="${session.UserAfterLogin != null}"
+            th:text="${session.UserAfterLogin.uid}"></h1>
+        <h1 id="san_id_check" hidden th:text="${SanDetail.san_id}"></h1>
+        <h1 id="session_check" hidden th:text="${session.UserAfterLogin != null ? 'true' : 'false'}"></h1>
     </div>
 
-    <!-- Chọn ngày -->
-    <div class="form-group">
-        <label for="bookingDate">Chọn ngày:</label>
-        <input type="date" id="bookingDate" class="form-control"\/>
-    </div>
+    <script>
+        function updateBookings() {
+            var selectedDate = document.getElementById("bookingDate").value; // lấy giá trị trong ô input ngày
+            var sanId = document.getElementById("san_id_check").textContent;
+            var sanDetailUser = document.getElementById("user_idsan_check").textContent;
+            var session = document.getElementById("session_check").textContent === 'true';
+            if (session) {
+                var sessionUser = document.getElementById("user_id_check").textContent;
+            }
+            if (selectedDate) {
+                fetch(`/getBookingsByDate?sanId=${sanId}&bookingDate=${selectedDate}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Clear the table before adding new rows
+                        var tableBody = document.getElementById("timeSlotsTable").querySelector("tbody");
+                        tableBody.innerHTML = "";
 
-    <!-- Hiển thị danh sách các booking -->
-    <h2 class="text-center">Danh sách khung giờ đặt sân</h2>
-    <table class="table table-bordered table-striped" id="timeSlotsTable">
-        <thead>
-            <tr>
-                <th>Thời gian bắt đầu</th>
-                <th>Thời gian kết thúc</th>
-                <th>Trạng thái</th>
-                <th>Chọn</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="booking : ${bookings}">
-                <td th:text="${#temporals.format(booking.start_time, ' HH:mm')}"></td>
-                <td th:text="${#temporals.format(booking.end_time, ' HH:mm')}"></td>
-                
-                <td th:text="${booking.status}"></td>
-                <td th:text="${booking.price}"></td>
-            </tr>
-        </tbody>
-    </table>
-    <h1 id="san_id_check" hidden th:text="${SanDetail.san_id}"></h1>
-</div>
+                        // Populate the table with the new bookings
+                        data.forEach(booking => {
+                            let editLink = ' ';
+
+                            // Check if user can edit (do this check with JavaScript if data is available on the client-side)
+
+                            if ((sessionUser === sanDetailUser)) {
+                                editLink = `<a href="/editBooking/${booking.booking_id}">Edit</a>`;
+                            } else {
+                                editLink = " ";
+                            }
+
+
+
+                            var row = `<tr>
+                            <td>${booking.start_time}</td>
+                            <td>${booking.end_time}</td>
+                            <td>${booking.status}</td>
+                            <td>${booking.price}</td>
+                            <td>Book</td>
+                            <td>${editLink}</td>
+                            </tr>`;
+
+                            tableBody.innerHTML += row;
+                        });
+                    });
+            }
+        }
+    </script>
 
 
 
 
 </body>
+
 </html>

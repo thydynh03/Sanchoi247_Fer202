@@ -14,7 +14,7 @@
     <table border="1px">
         <thead>
             <tr>
-               
+
                 <th>Type</th>
                 <th>Location</th>
                 <th>Size</th>
@@ -30,6 +30,12 @@
                 <td th:text="${san.Size.size}">Size</td>
                 <td><img th:src="${san.img}" style="width: auto;" height="50px"></td>
                 <td><a th:href="@{/ShowDetailLocation/{id}(id=${san.san_id})}">View</a></td>
+                <td th:if="${session.UserAfterLogin != null && (session.UserAfterLogin.uid == san.user.uid)}">
+                    <form th:action="@{/showAddScheduleBooking}" method="post">
+                        <input type="hidden" name="sanId" th:value="${san.san_id}" />
+                        <button type="submit">Add schedule</button>
+                    </form>
+                </td>
             </tr>
         </tbody>
     </table>

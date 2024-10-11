@@ -180,7 +180,15 @@ INSERT INTO san (uid, loai_san_id, vi_tri_san, size_id, img, is_approve) VALUES
 (2, 4, '1', 4, 'https://bongrotuoitre.vn/wp-content/uploads/2020/07/kich-thuoc-san-bong-ro.jpg', 1),
 (2, 4, '2', 4, 'https://bongrotuoitre.vn/wp-content/uploads/2020/07/kich-thuoc-san-bong-ro.jpg', 1);
 
-
+CREATE TABLE Schedulebooking (
+    booking_id INT AUTO_INCREMENT PRIMARY KEY,
+    san_id INT,
+    start_time TIME,
+    end_time TIME,
+    status VARCHAR(20), -- 'booked', 'available'
+    price float, -- Thêm trường giá tiền
+    FOREIGN KEY (san_id) REFERENCES san(san_id)
+);
 INSERT INTO Schedulebooking (san_id, start_time, end_time, status, price)
 VALUES 
 (14, '07:00:00', '08:30:00', 'available', 100.00),
@@ -190,9 +198,12 @@ VALUES
 (14, '13:00:00', '14:30:00', 'available', 100.00),
 (14, '14:30:00', '16:00:00', 'available', 100.00),
 (14, '16:00:00', '17:30:00', 'available', 100.00),
-(14, '17:30:00', '19:00:00', 'booked', 100.00),
+(14, '17:30:00', '19:00:00', 'available', 100.00),
 (14, '19:00:00', '20:30:00', 'available', 100.00),
 (14, '20:30:00', '22:00:00', 'available', 100.00);
+-- tất cả nên là available dựa vào thuộc tính ngày thuê sân ở trên để xác định ngày nào đã thuê và ngày nào chưa thuê
+-- nên thêm table ngày thuê ? nếu như ngày thuê sân không có thì mặc định là available nếu như ngày thuê sân có thì booked
+
 
 select * from users;
 
