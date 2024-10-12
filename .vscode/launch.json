@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-SanChoi247Application<SanChoi247>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.SanChoi247.SanChoi247Application",
+            "projectName": "SanChoi247",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
