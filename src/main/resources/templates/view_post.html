@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<h1 th:text="${post.title}"></h1>
+<div th:utext="${post.content}"></div>
+
+<h2>Comments</h2>
+<ul>
+    <li th:each="comment : ${post.comments}">
+        <p th:text="${comment.author}"></p>
+        <p th:text="${comment.content}"></p>
+    </li>
+</ul>
+
+<form th:action="@{/posts/{id}/comments(id=${post.id})}" th:object="${comment}" method="post">
+    <input type="text" th:field="*{author}" placeholder="Your name"/><br/>
+    <textarea th:field="*{content}" placeholder="Your comment"></textarea><br/>
+    <button type="submit">Add Comment</button>
+</form>
+
+<a href="/posts">Back to all posts</a>
+</body>
+</html>

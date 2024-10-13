@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '#content'
+        });
+    </script>
+</head>
+<body>
+    <h1>helo wword</h1>
+<form th:action="@{/posts}" th:object="${post}" method="post">
+    <input type="text" th:field="*{title}" placeholder="Title"/><br/>
+    <textarea id="content" th:field="*{content}"></textarea><br/>
+    <button type="submit">Save Post</button>
+</form>
+</body>
+</html>
