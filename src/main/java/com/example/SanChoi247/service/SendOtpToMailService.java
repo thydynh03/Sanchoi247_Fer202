@@ -17,7 +17,7 @@ public class SendOtpToMailService {
     private final JavaMailSender javaMailSender;
 
     private LocalDateTime lastSentTime; // Lưu thời gian gửi OTP cuối
-    private static final int OTP_COOLDOWN_SECONDS = 15; // Thời gian chờ 60 giây
+    private static final int OTP_COOLDOWN_SECONDS = 5; // Thời gian chờ 60 giây
 
     @Autowired
     public SendOtpToMailService(JavaMailSender javaMailSender) {
@@ -60,7 +60,7 @@ public class SendOtpToMailService {
         mimeMessageHelper.setSubject("OTP for email verification");
         mimeMessageHelper.setText("Hello,\n" + //
                         "\n" + //
-                        "XIN LOI BARO NHIEU NHO NGU SOM\n" +
+                        "may thang ngu\n" +
                         "Your OTP is: " + otp);
         javaMailSender.send(mimeMessage);
     }

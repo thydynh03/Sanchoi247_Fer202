@@ -10,8 +10,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import org.springframework.stereotype.Repository;
 
 import com.example.SanChoi247.model.dto.SignUpRequest;
@@ -199,18 +199,20 @@ public class UserRepo {
         return UserList;
     }
 
+
+
     public void addNewUser(User user) throws Exception {
         Class.forName(Baseconnection.nameClass);
         Connection con = DriverManager.getConnection(Baseconnection.url, Baseconnection.username,
                 Baseconnection.password);
-    
-        // Sử dụng BCrypt để mã hóa mật khẩu
+        
+        // Mã hóa mật khẩu
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String hashedPassword = passwordEncoder.encode(user.getPassword());
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
     
-        // Câu lệnh SQL
+        // Câu lệnh SQL với thêm cột role
         PreparedStatement ps = con.prepareStatement(
-            "INSERT INTO users (name, dob, gender, phone, email, username, password, avatar, ten_san, address, img_san1, img_san2, img_san3, img_san4, img_san5, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            "INSERT INTO users (name, dob, gender, phone, email, username, password, avatar, ten_san, address, img_san1, img_san2, img_san3, img_san4, img_san5, status, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     
         ps.setString(1, user.getName());
         ps.setDate(2, user.getDob());
@@ -218,10 +220,7 @@ public class UserRepo {
         ps.setString(4, user.getPhone());
         ps.setString(5, user.getEmail());
         ps.setString(6, user.getUsername());
-    
-        // Sử dụng mật khẩu đã mã hóa
-        ps.setString(7, hashedPassword);
-    
+        ps.setString(7, encodedPassword); // Lưu mật khẩu đã mã hóa
         ps.setString(8, user.getAvatar());
         ps.setString(9, user.getTen_san());
         ps.setString(10, user.getAddress());
@@ -230,13 +229,17 @@ public class UserRepo {
         ps.setString(13, user.getImg_san3());
         ps.setString(14, user.getImg_san4());
         ps.setString(15, user.getImg_san5());
-        ps.setString(16, "U"); // Role luôn là 'U'
+    
+        // Gán giá trị 'U' cho cột role
+        ps.setString(16, "0");
+        ps.setString(17, "U");
     
         ps.executeUpdate();
         ps.close();
         con.close();
-    }  
+    }
 
+    
     public void updateUserById(User user) throws Exception {
         Class.forName(Baseconnection.nameClass);
         Connection con = DriverManager.getConnection(Baseconnection.url, Baseconnection.username,

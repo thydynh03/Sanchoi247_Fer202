@@ -29,11 +29,18 @@ public class LoginController {
     @Autowired
     LoginRepo loginRepo;
     @Autowired
+
     private SendOtpToMailService sendOtpToMailService;
 
     private String generatedOtp;  // Biến để lưu OTP
     private String email; // Lưu email để sử dụng cho gửi lại OT
-
+    @GetMapping("/Box")
+    public String getBoxChatPage() {
+        return "redirect:/client/boxChat.html"; // Chuyển hướng tới file HTML tĩnh trong resources/static
+    }
+    
+    
+    
     @GetMapping("/")
     public String ShowIndex(Model model, HttpServletRequest httpServletRequest) throws Exception {
         ArrayList<User> sanList = userRepo.getAllUser();
@@ -48,7 +55,7 @@ public class LoginController {
     }
 
     @GetMapping("/Login")
-    public String showLogin(Model model) throws Exception {
+    public String showLogin(Model model) {
         return "auth/login";
     }
 
@@ -115,13 +122,14 @@ System.out.println("Confirm Password: " + confirmPassword);
     newUser.setName(name);
     newUser.setEmail(email);
     newUser.setUsername(username);
+    newUser.setPassword(password);
     newUser.setRole(Character.toUpperCase(role));
     newUser.setGender(gender); // Store the gender
     // Store user in session
     System.out.println("New User before saving: " + newUser);
     
     // Validate newUser fields
-    if (newUser.getName() == null || newUser.getEmail() == null || newUser.getUsername() == null) {
+    if (newUser.getName() == null || newUser.getEmail() == null || newUser.getUsername() == null || newUser.getPassword() == null) {
         throw new Exception("Name, Email, or Username cannot be null.");
     }
 
@@ -200,39 +208,93 @@ public String enterOtpPage() {
     return "auth/enterOtp"; // This should point to your template/view file
 }
 
+
+// @PostMapping("/verifyOtp")
+// public String verifyOtp(@RequestParam("otp") String otp, HttpSession httpSession, Model model) throws Exception {
+//     User newUser = (User) httpSession.getAttribute("newUser"); // Lấy thông tin người dùng từ session
+//     if (newUser == null) {
+//         model.addAttribute("error", "User session expired. Please sign up again.");
+//         return "auth/enterOtp"; // Quay lại trang nhập OTP nếu session đã hết hạn
+//     }
+
+//     // Kiểm tra OTP
+//     if (otp == null || otp.trim().isEmpty()) {
+//         model.addAttribute("error", "OTP không được để trống.");
+//         return "auth/enterOtp"; // Quay lại trang nhập OTP nếu OTP rỗng
+//     }
+
+//     if (!generatedOtp.equals(otp)) {
+//         model.addAttribute("error", "OTP không chính xác."); 
+//         return "auth/enterOtp"; // Quay lại trang nhập OTP nếu OTP không đúng
+//     }
+
+//     // OTP hợp lệ, tiến hành lưu user vào database
+//     try {
+//         userRepo.addNewUser(newUser);
+//         System.out.println("User saved successfully: " + newUser);
+//         model.addAttribute("User saved successfully: ");
+
+//     } catch (Exception e) {
+//         e.printStackTrace();
+//         model.addAttribute("error", "Error saving user: " + e.getMessage());
+//         return "auth/enterOtp"; // Quay lại trang nhập OTP nếu có lỗi
+//     }
+
+//     // Xóa session sau khi hoàn thành đăng ký
+    
+//     httpSession.setAttribute("redirectUrl", "/auth/login"); // Đường dẫn chuyển hướng
+//     httpSession.invalidate();
+//     return "redirect:/auth/login"; // Chuyển hướng về trang đăng nhập
+// }
+
+// }
+@GetMapping("/auth/login")
+public String login() {
+    return "auth/login"; // Trả về view của trang đăng nhập (auth/login.html)
+}
+
 @PostMapping("/verifyOtp")
 public String verifyOtp(@RequestParam("otp") String otp, HttpSession httpSession, Model model) throws Exception {
     User newUser = (User) httpSession.getAttribute("newUser"); // Lấy thông tin người dùng từ session
     if (newUser == null) {
-        model.addAttribute("error", "User session expired. Please sign up again.");
-        return "auth/enterOtp"; // Quay lại trang nhập OTP nếu session đã hết hạn
+        model.addAttribute("error", "user null");
+        return "auth/enterOtp";
     }
-
+    
     // Kiểm tra OTP
     if (otp == null || otp.trim().isEmpty()) {
-        model.addAttribute("error", "OTP không được để trống.");
-        return "auth/enterOtp"; // Quay lại trang nhập OTP nếu OTP rỗng
+        model.addAttribute("error", "OTP không được để trống");
+        return "auth/enterOtp";
     }
 
     if (!generatedOtp.equals(otp)) {
-        model.addAttribute("error", "OTP không chính xác."); 
-        return "auth/enterOtp"; // Quay lại trang nhập OTP nếu OTP không đúng
+        model.addAttribute("error", "OTP không chính xác");
+        return "auth/enterOtp";
     }
 
-    // OTP hợp lệ, tiến hành lưu user vào database
-    try {
-        userRepo.addNewUser(newUser);
-        System.out.println("User saved successfully: " + newUser);
-    } catch (Exception e) {
-        e.printStackTrace();
-        model.addAttribute("error", "Error saving user: " + e.getMessage());
-        return "auth/enterOtp"; // Quay lại trang nhập OTP nếu có lỗi
-    }
+    if (otp.equals(generatedOtp)) {
+        // Lưu người dùng vào database
+        System.out.println("Saving user to database: " + newUser);
+        try {
+            userRepo.addNewUser(newUser);
+            System.out.println("User saved successfully: " + newUser);
+            httpSession.invalidate(); // Hủy session sau khi đăng ký thành công
+            return "auth/login"; // Chuyển đến trang đăng nhập sau khi đăng ký thành công
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("error", "Error saving user: " + e.getMessage());
+            return "auth/enterOtp"; // Trở lại trang nếu có lỗi
+        }
 
-    // Xóa session sau khi hoàn thành đăng ký
-    httpSession.invalidate();
-    httpSession.setAttribute("redirectUrl", "/auth/login"); // Đường dẫn chuyển hướng
-    return "redirect:/auth/login"; // Chuyển hướng về trang đăng nhập
+        // userRepo.saveOnSignup(newUser); // Bỏ dòng này nếu không cần
+
+        // Xóa thông tin trong session sau khi hoàn thành đăng ký
+
+    } else {
+        model.addAttribute("error", "Invalid OTP. Please try again.");
+        return "auth/enterOtp"; // OTP sai thì trở lại trang nhập OTP
+    }
 }
+
 
 }
